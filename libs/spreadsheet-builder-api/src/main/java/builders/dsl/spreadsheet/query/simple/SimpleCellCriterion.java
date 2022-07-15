@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * Copyright 2020 Vladimir Orany.
+ * Copyright 2020-2022 Vladimir Orany.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,42 +50,42 @@ final class SimpleCellCriterion extends AbstractCriterion<Cell, CellCriterion> i
     }
     
     @Override
-	public CellCriterion localDate(LocalDate value) {
-    	addValueCondition(value, LocalDate.class);
-		return this;
-	}
+    public CellCriterion localDate(LocalDate value) {
+        addValueCondition(value, LocalDate.class);
+        return this;
+    }
 
-	@Override
-	public CellCriterion localDate(Predicate<LocalDate> predicate) {
-		addValueCondition(predicate, LocalDate.class);
-		return this;
-	}
+    @Override
+    public CellCriterion localDate(Predicate<LocalDate> predicate) {
+        addValueCondition(predicate, LocalDate.class);
+        return this;
+    }
 
-	@Override
-	public CellCriterion localDateTime(LocalDateTime value) {
-		addValueCondition(value, LocalDateTime.class);
-		return this;
-	}
+    @Override
+    public CellCriterion localDateTime(LocalDateTime value) {
+        addValueCondition(value, LocalDateTime.class);
+        return this;
+    }
 
-	@Override
-	public CellCriterion localDateTime(Predicate<LocalDateTime> predicate) {
-		addValueCondition(predicate, LocalDateTime.class);
-		return this;
-	}
+    @Override
+    public CellCriterion localDateTime(Predicate<LocalDateTime> predicate) {
+        addValueCondition(predicate, LocalDateTime.class);
+        return this;
+    }
 
-	@Override
-	public CellCriterion localTime(LocalTime value) {
-		addValueCondition(value, LocalTime.class);
-		return this;
-	}
+    @Override
+    public CellCriterion localTime(LocalTime value) {
+        addValueCondition(value, LocalTime.class);
+        return this;
+    }
 
-	@Override
-	public CellCriterion localTime(Predicate<LocalTime> predicate) {
-		addValueCondition(predicate, LocalTime.class);
-		return this;
-	}
+    @Override
+    public CellCriterion localTime(Predicate<LocalTime> predicate) {
+        addValueCondition(predicate, LocalTime.class);
+        return this;
+    }
 
-	@Override
+    @Override
     public SimpleCellCriterion number(Double value) {
         addValueCondition(value, Double.class);
         return this;

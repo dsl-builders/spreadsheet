@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * Copyright 2020 Vladimir Orany.
+ * Copyright 2020-2022 Vladimir Orany.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,6 @@ import builders.dsl.spreadsheet.builder.api.RowDefinition;
 import builders.dsl.spreadsheet.builder.api.SheetDefinition;
 
 import java.util.Collections;
-import java.util.Map;
 import java.util.function.Consumer;
 
 class SheetNode extends AbstractNode implements SheetDefinition {
