@@ -16,6 +16,6 @@
  * limitations under the License.
  */
 dependencies {
-    compile project(':spreadsheet-builder-groovy')
-    compile "org.spockframework:spock-core:$spockVersion"
+    api project(':spreadsheet-builder-groovy')
+    implementation "org.spockframework:spock-core:$spockVersion"
 }

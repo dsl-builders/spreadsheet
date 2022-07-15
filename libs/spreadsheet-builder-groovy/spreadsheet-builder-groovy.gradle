@@ -15,14 +15,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-config {
-    bintray {
-        enabled = true
-    }
-}
 
 dependencies {
-    compile project(':spreadsheet-builder-api')
-    compile "space.jasan:groovy-closure-support:$closureSupportVersion"
-    compile "org.codehaus.groovy:groovy:$groovyVersion"
+    api project(':spreadsheet-builder-api')
+    implementation "space.jasan:groovy-closure-support:$closureSupportVersion"
+    implementation "org.codehaus.groovy:groovy:$groovyVersion"
 }

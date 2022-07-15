@@ -15,18 +15,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-config {
-    bintray {
-        enabled = true
-    }
-}
 
 dependencies {
-    compile project(':spreadsheet-builder-poi')
+    api project(':spreadsheet-builder-poi')
 
-    compile 'com.google.apis:google-api-services-drive:v3-rev160-1.25.0'
+    implementation 'com.google.apis:google-api-services-drive:v3-rev160-1.25.0'
 
-    testCompile project(':spreadsheet-builder-tck-groovy')
-    testCompile 'com.google.api-client:google-api-client:1.25.0'
-    testCompile 'com.google.oauth-client:google-oauth-client-jetty:1.25.0'
+    testImplementation project(':spreadsheet-builder-tck-groovy')
+    testImplementation 'com.google.api-client:google-api-client:1.25.0'
+    testImplementation 'com.google.oauth-client:google-oauth-client-jetty:1.25.0'
 }

@@ -17,14 +17,17 @@
  */
 plugins {
     id 'org.kordamp.gradle.java-project'
-    id 'org.kordamp.gradle.bintray'
     id 'org.kordamp.gradle.checkstyle'
     id 'org.kordamp.gradle.codenarc'
     id 'org.kordamp.gradle.coveralls'
+    id 'io.github.gradle-nexus.publish-plugin'
 }
 
-if (!project.hasProperty('bintrayUsername')) ext.bintrayUsername = '**UNDEFINED**'
-if (!project.hasProperty('bintrayApiKey'))   ext.bintrayApiKey   = '**UNDEFINED**'
+if (!project.hasProperty('ossrhUsername'))      ext.ossrhUsername       = System.getenv('SONATYPE_USERNAME') ?: '**UNDEFINED**'
+if (!project.hasProperty('ossrhPassword'))      ext.ossrhPassword       = System.getenv('SONATYPE_PASSWORD') ?: '**UNDEFINED**'
+if (!project.hasProperty('signingKeyId'))       ext.signingKeyId        = System.getenv('SIGNING_KEY_ID') ?: '**UNDEFINED**'
+if (!project.hasProperty('signingPassword'))    ext.signingPassword     = System.getenv('SIGNING_PASSWORD') ?: '**UNDEFINED**'
+if (!project.hasProperty('signingSecretKey'))   ext.signingSecretKey    = System.getenv('SIGNING_SECRET_KEY_PATH') ? rootProject.file(System.getenv('SIGNING_SECRET_KEY_PATH')).text : '**UNDEFINED**'
 
 config {
     release = (rootProject.findProperty('release') ?: false).toBoolean()
@@ -69,19 +72,15 @@ config {
     }
 
     publishing {
-        signing             = false
-        releasesRepository  = 'localRelease'
-        snapshotsRepository = 'localSnapshot'
-    }
-
-    bintray {
-        credentials {
-            username = bintrayUsername
-            password = bintrayApiKey
+        enabled = false
+        signing {
+            enabled = signingSecretKey != '**UNDEFINED**'
+            keyId = signingKeyId
+            secretKey = signingSecretKey
+            password = signingPassword
         }
-        userOrg    = 'dsl-builders'
-        name       = rootProject.name
-        publish    = true
+        releasesRepository = 'localRelease'
+        snapshotsRepository = 'localSnapshot'
     }
 
     quality {
@@ -95,6 +94,14 @@ config {
     }
 
     docs {
+        javadoc {
+            autoLinks {
+                enabled = false
+            }
+            aggregate {
+                enabled = false
+            }
+        }
         groovydoc {
             enabled = false
             aggregate {
@@ -104,9 +111,19 @@ config {
     }
 }
 
+nexusPublishing {
+    repositories {
+        sonatype {
+            nexusUrl = uri('https://s01.oss.sonatype.org/service/local/')
+            snapshotRepositoryUrl = uri('https://s01.oss.sonatype.org/content/repositories/snapshots/')
+            username = ossrhUsername
+            password = ossrhPassword
+        }
+    }
+}
+
 allprojects {
     repositories {
-        jcenter()
         mavenCentral()
     }
 
@@ -119,24 +136,20 @@ allprojects {
 subprojects { subproject ->
     if (subproject.name == 'guide') return
 
+    apply plugin: 'java-library'
     apply plugin: 'groovy'
 
     config {
-        bintray {
-            name = subproject.name
-            githubRepo = slug
+        publishing {
+            enabled = true
         }
     }
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
-    repositories {
-        jcenter()
-    }
-
     dependencies {
-        testCompile "org.spockframework:spock-core:$spockVersion"
+        testImplementation "org.spockframework:spock-core:$spockVersion"
     }
 
     jar {
