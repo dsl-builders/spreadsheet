@@ -1,7 +1,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 #
-# Copyright 2020 Vladimir Orany.
+# Copyright 2020-2022 Vladimir Orany.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -109,9 +109,6 @@ sheets:
   - number: 3
     cells:
     - column: C
-      image:
-        type: png
-        url: https://goo.gl/UcL1wy
 - name: Rich Text
   rows:
   - cells:

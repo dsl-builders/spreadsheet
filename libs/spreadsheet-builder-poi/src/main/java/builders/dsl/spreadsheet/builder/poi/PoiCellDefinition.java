@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * Copyright 2020 Vladimir Orany.
+ * Copyright 2020-2022 Vladimir Orany.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -57,18 +57,18 @@ class PoiCellDefinition extends AbstractCellDefinition {
         }
         
         if (value instanceof LocalDate) {
-        	cell.setCellValue((LocalDate) value);
-        	return this;
+            cell.setCellValue((LocalDate) value);
+            return this;
         }
         
         if (value instanceof LocalTime) {
-        	cell.setCellValue(LocalDateTime.of(LocalDate.of(1900, 1, 1), (LocalTime) value));
-        	return this;
+            cell.setCellValue(LocalDateTime.of(LocalDate.of(1900, 1, 1), (LocalTime) value));
+            return this;
         }
 
         if (value instanceof LocalDateTime) {
-        	cell.setCellValue((LocalDateTime) value);
-        	return this;
+            cell.setCellValue((LocalDateTime) value);
+            return this;
         }
         
         if (value instanceof Boolean) {

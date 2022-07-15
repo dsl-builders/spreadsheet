@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * Copyright 2020 Vladimir Orany.
+ * Copyright 2020-2022 Vladimir Orany.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -428,20 +428,21 @@ abstract class AbstractBuilderSpec extends Specification {
     protected abstract SpreadsheetCriteria createCriteria()
     protected abstract SpreadsheetBuilder createSpreadsheetBuilder()
 
-    protected int getExpectedAllRowsSize() { 20068 }
-    protected int getExpectedAllCellSize() { 80134 }
+    protected int getExpectedAllRowsSize() { return 20068 }
+    protected int getExpectedAllCellSize() { return 80134 }
 
     @SuppressWarnings('EmptyMethodInAbstractClass')
     protected void openSpreadsheet() { }
 
-    protected boolean isVeryHiddenSupported() { true }
-    protected boolean isFillSupported() { true }
+    protected boolean isVeryHiddenSupported() { return true }
+    protected boolean isFillSupported() { return true }
 
     /**
      * Tries to open the file in Word. Only works locally on Mac at the moment. Ignored otherwise.
      * Main purpose of this method is to quickly open the generated file for manual review.
      * @param file file to be opened
      */
+    @SuppressWarnings('StaticMethodsBeforeInstanceMethods')
     protected static void open(File file) {
         try {
             if (Desktop.desktopSupported && Desktop.desktop.isSupported(Desktop.Action.OPEN)) {
@@ -453,6 +454,10 @@ abstract class AbstractBuilderSpec extends Specification {
         }
     }
 
+    @SuppressWarnings([
+            'FactoryMethodName',
+            'BracesForForLoop',
+    ])
     @CompileStatic
     private static void buildSpreadsheet(SpreadsheetBuilder builder, Date today) {
         builder.build {
@@ -745,7 +750,7 @@ abstract class AbstractBuilderSpec extends Specification {
                         }
                     }
                     cell {
-                        value ('x' * 10000)
+                        value 'x' * 10000
                         name 'Salutation'
                         width auto
                     }
@@ -993,7 +998,7 @@ abstract class AbstractBuilderSpec extends Specification {
                     cell {
                         value 'BLUE'
                         rowspan 3
-                        styles  'centered', 'bold'
+                        styles 'centered', 'bold'
                     }
                 }
             }

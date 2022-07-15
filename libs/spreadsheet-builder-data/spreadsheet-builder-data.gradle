@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * Copyright 2020 Vladimir Orany.
+ * Copyright 2020-2022 Vladimir Orany.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,19 +15,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-config {
-    bintray {
-        enabled = true
-    }
-}
-
 dependencies {
-    compile project(':spreadsheet-builder-api')
+    api project(':spreadsheet-builder-api')
 
-    compile "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
-    compile "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${jacksonVersion}"
-    compile "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${jacksonVersion}"
+    implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${jacksonVersion}"
+    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${jacksonVersion}"
 
-    testCompile project(':spreadsheet-builder-poi')
-    testCompile project(':spreadsheet-builder-tck-groovy')
+    testImplementation project(':spreadsheet-builder-poi')
+    testImplementation project(':spreadsheet-builder-tck-groovy')
+    testImplementation 'org.apache.poi:poi-ooxml:4.1.1'
+    testImplementation 'org.apache.poi:ooxml-schemas:1.4'
 }

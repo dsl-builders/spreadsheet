@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * Copyright 2020 Vladimir Orany.
+ * Copyright 2020-2022 Vladimir Orany.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -74,9 +74,9 @@ public class Java8BuilderTest {
 
     @Test public void testBuilderFull() throws IOException, InvalidFormatException {
         Date today = new Date();
-        LocalDate localDate = LocalDate.of(2019,9,1);
-        LocalDateTime localDateTime = LocalDateTime.of(2019,9,1,10,33);
-        LocalTime localTime = LocalTime.of(10,33,0);
+        LocalDate localDate = LocalDate.of(2019, 9, 1);
+        LocalDateTime localDateTime = LocalDateTime.of(2019, 9, 1, 10, 33);
+        LocalTime localTime = LocalTime.of(10, 33, 0);
         File excel = tmp.newFile();
 
         buildSpreadsheet(PoiSpreadsheetBuilder.create(excel), today, localDate, localTime, localDateTime);
@@ -150,7 +150,7 @@ public class Java8BuilderTest {
                   c.localDate(localDate)
                )
            )
-        		)
+                )
         );
         // This should return  localDate and localDateTime cells
         assertEquals(2, localDateCells.getCells().size());
@@ -163,7 +163,7 @@ public class Java8BuilderTest {
                   c.localDate(localDate).and(c.localTime(LocalTime.of(0, 0)))
                )
            )
-        		)
+                )
         );
         assertEquals(1, onlyLocalDateCells.getCells().size());
         
@@ -174,7 +174,7 @@ public class Java8BuilderTest {
                   c.localTime(localTime)
                )
            )
-        		)
+                )
         );
         // This should return  localTime and localDateTime cells
         assertEquals(2, localTimeCells.getCells().size());
@@ -186,7 +186,7 @@ public class Java8BuilderTest {
                   c.localTime(localTime).and(c.localDate(LocalDate.of(1900, 1, 1)))
                )
            )
-        		)
+                )
         );
         assertEquals(1, onlyLocalTimeCells.getCells().size());
         
@@ -197,7 +197,7 @@ public class Java8BuilderTest {
                   c.localDateTime(localDateTime)
                )
            )
-        		)
+                )
         );
         assertEquals(1, localDateTimeCells.getCells().size());
 

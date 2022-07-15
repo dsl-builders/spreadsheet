@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * Copyright 2020 Vladimir Orany.
+ * Copyright 2020-2022 Vladimir Orany.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,9 +56,9 @@ class GoogleBuilderSpec extends AbstractBuilderSpec {
 
     @SuppressWarnings('UnnecessaryGetter')
     void cleanup() {
-        final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport()
+        final NetHttpTransport transport = GoogleNetHttpTransport.newTrustedTransport()
 
-        Drive service = new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, credentials)
+        Drive service = new Drive.Builder(transport, JSON_FACTORY, credentials)
                 .setApplicationName('Google Builder Spec')
                 .build()
 
@@ -91,17 +91,17 @@ class GoogleBuilderSpec extends AbstractBuilderSpec {
     }
 
     @Override
-    protected boolean isVeryHiddenSupported() { false }
+    protected boolean isVeryHiddenSupported() { return false }
 
     @Override
-    protected boolean isFillSupported() { false }
+    protected boolean isFillSupported() { return false }
 
     // google exports empty rows as well
     @Override
-    protected int getExpectedAllRowsSize() { 39665 }
+    protected int getExpectedAllRowsSize() { return 39665 }
 
     @Override
-    protected int getExpectedAllCellSize() { 80130 }
+    protected int getExpectedAllCellSize() { return 80130 }
 
     /**
      * Tries to open the file in the browser. Only works locally on Mac at the moment. Ignored otherwise.
@@ -137,9 +137,9 @@ class GoogleBuilderSpec extends AbstractBuilderSpec {
             'UnnecessarySetter',
     ])
     private static HttpRequestInitializer buildCredentials(GoogleClientSecrets secrets) {
-        final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport()
+        final NetHttpTransport transport = GoogleNetHttpTransport.newTrustedTransport()
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-                HTTP_TRANSPORT, JSON_FACTORY, secrets, SCOPES)
+                transport, JSON_FACTORY, secrets, SCOPES)
                 .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH)))
                 .setAccessType('offline')
                 .build()

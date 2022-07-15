@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * Copyright 2020 Vladimir Orany.
+ * Copyright 2020-2022 Vladimir Orany.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -53,23 +53,23 @@ import space.jasan.support.groovy.closure.ConsumerWithDelegate
 @CompileStatic class SpreadsheetBuilderExtensions {
 
     static CellDefinition value(CellDefinition self, CharSequence sequence) {
-        self.value(sequence.stripIndent().trim())
+        return self.value(sequence.stripIndent().trim())
     }
 
     static CanDefineStyle style(CanDefineStyle stylable, String name, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = CellStyleDefinition) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.builder.api.CellStyleDefinition') Closure styleDefinition) {
-        stylable.style(name, ConsumerWithDelegate.create(styleDefinition))
+        return stylable.style(name, ConsumerWithDelegate.create(styleDefinition))
     }
 
     static CellDefinition comment(CellDefinition cellDefinition, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = CommentDefinition) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.builder.api.CommentDefinition') Closure commentDefinition) {
-        cellDefinition.comment(ConsumerWithDelegate.create(commentDefinition))
+        return cellDefinition.comment(ConsumerWithDelegate.create(commentDefinition))
     }
 
     static CellDefinition text(CellDefinition cellDefinition, String text, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = FontDefinition) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.builder.api.FontDefinition') Closure fontConfiguration) {
-        cellDefinition.text(text, ConsumerWithDelegate.create(fontConfiguration))
+        return cellDefinition.text(text, ConsumerWithDelegate.create(fontConfiguration))
     }
 
     static CellStyleDefinition font(CellStyleDefinition style, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = FontDefinition) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.builder.api.FontDefinition') Closure fontConfiguration) {
-        style.font(ConsumerWithDelegate.create(fontConfiguration))
+        return style.font(ConsumerWithDelegate.create(fontConfiguration))
     }
 
     /**
@@ -77,7 +77,7 @@ import space.jasan.support.groovy.closure.ConsumerWithDelegate
      * @param borderConfiguration border configuration closure
      */
     static CellStyleDefinition border(CellStyleDefinition style, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = BorderDefinition) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.builder.api.BorderDefinition') Closure borderConfiguration) {
-        style.border(ConsumerWithDelegate.create(borderConfiguration))
+        return style.border(ConsumerWithDelegate.create(borderConfiguration))
     }
 
     /**
@@ -86,7 +86,7 @@ import space.jasan.support.groovy.closure.ConsumerWithDelegate
      * @param borderConfiguration border configuration closure
      */
     static CellStyleDefinition border(CellStyleDefinition style, Keywords.BorderSide location, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = BorderDefinition) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.builder.api.BorderDefinition') Closure borderConfiguration) {
-        style.border(location, ConsumerWithDelegate.create(borderConfiguration))
+        return style.border(location, ConsumerWithDelegate.create(borderConfiguration))
     }
 
     /**
@@ -96,7 +96,7 @@ import space.jasan.support.groovy.closure.ConsumerWithDelegate
      * @param borderConfiguration border configuration closure
      */
     static CellStyleDefinition border(CellStyleDefinition style, Keywords.BorderSide first, Keywords.BorderSide second, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = BorderDefinition) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.builder.api.BorderDefinition') Closure borderConfiguration) {
-        style.border(first, second, ConsumerWithDelegate.create(borderConfiguration))
+        return style.border(first, second, ConsumerWithDelegate.create(borderConfiguration))
     }
 
     /**
@@ -107,7 +107,7 @@ import space.jasan.support.groovy.closure.ConsumerWithDelegate
      * @param borderConfiguration border configuration closure
      */
     static CellStyleDefinition border(CellStyleDefinition style, Keywords.BorderSide first, Keywords.BorderSide second, Keywords.BorderSide third, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = BorderDefinition) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.builder.api.BorderDefinition') Closure borderConfiguration) {
-        style.border(first, second, third, ConsumerWithDelegate.create(borderConfiguration))
+        return style.border(first, second, third, ConsumerWithDelegate.create(borderConfiguration))
     }
 
     /**
@@ -117,7 +117,7 @@ import space.jasan.support.groovy.closure.ConsumerWithDelegate
      * @param styleDefinition the definition of the style customizing the predefined style
      */
     static HasStyle style(HasStyle stylable, String name, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = CellStyleDefinition) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.builder.api.CellStyleDefinition') Closure styleDefinition) {
-        stylable.style(name, ConsumerWithDelegate.create(styleDefinition))
+        return stylable.style(name, ConsumerWithDelegate.create(styleDefinition))
     }
 
     /**
@@ -127,7 +127,7 @@ import space.jasan.support.groovy.closure.ConsumerWithDelegate
      * @param styleDefinition the definition of the style customizing the predefined style
      */
     static HasStyle styles(HasStyle stylable, Iterable<String> names, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = CellStyleDefinition) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.builder.api.CellStyleDefinition') Closure styleDefinition) {
-        stylable.styles(names, ConsumerWithDelegate.create(styleDefinition))
+        return stylable.styles(names, ConsumerWithDelegate.create(styleDefinition))
     }
 
     /**
@@ -135,23 +135,23 @@ import space.jasan.support.groovy.closure.ConsumerWithDelegate
      * @param styleDefinition the definition of the style
      */
     static HasStyle style(HasStyle stylable, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = CellStyleDefinition) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.builder.api.CellStyleDefinition') Closure styleDefinition) {
-        stylable.style(ConsumerWithDelegate.create(styleDefinition))
+        return stylable.style(ConsumerWithDelegate.create(styleDefinition))
     }
 
     static RowDefinition cell(RowDefinition row, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = CellDefinition) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.builder.api.CellDefinition') Closure cellDefinition) {
-        row.cell(ConsumerWithDelegate.create(cellDefinition))
+        return row.cell(ConsumerWithDelegate.create(cellDefinition))
     }
     static RowDefinition cell(RowDefinition row, int column, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = CellDefinition) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.builder.api.CellDefinition') Closure cellDefinition) {
-        row.cell(column, ConsumerWithDelegate.create(cellDefinition))
+        return row.cell(column, ConsumerWithDelegate.create(cellDefinition))
     }
     static RowDefinition cell(RowDefinition row, String column, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = CellDefinition) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.builder.api.CellDefinition') Closure cellDefinition) {
-        row.cell(column, ConsumerWithDelegate.create(cellDefinition))
+        return row.cell(column, ConsumerWithDelegate.create(cellDefinition))
     }
     static RowDefinition group(RowDefinition row, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = RowDefinition) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.builder.api.RowDefinition') Closure insideGroupDefinition) {
-        row.group(ConsumerWithDelegate.create(insideGroupDefinition))
+        return row.group(ConsumerWithDelegate.create(insideGroupDefinition))
     }
     static RowDefinition collapse(RowDefinition row, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = RowDefinition) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.builder.api.RowDefinition') Closure insideGroupDefinition) {
-        row.collapse(ConsumerWithDelegate.create(insideGroupDefinition))
+        return row.collapse(ConsumerWithDelegate.create(insideGroupDefinition))
     }
 
     /**
@@ -159,7 +159,7 @@ import space.jasan.support.groovy.closure.ConsumerWithDelegate
      * @param rowDefinition closure defining the content of the row
      */
     static SheetDefinition row(SheetDefinition sheet, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = RowDefinition) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.builder.api.RowDefinition') Closure rowDefinition) {
-        sheet.row(ConsumerWithDelegate.create(rowDefinition))
+        return sheet.row(ConsumerWithDelegate.create(rowDefinition))
     }
 
     /**
@@ -168,14 +168,14 @@ import space.jasan.support.groovy.closure.ConsumerWithDelegate
      * @param rowDefinition closure defining the content of the row
      */
     static SheetDefinition row(SheetDefinition sheet, int row, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = RowDefinition) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.builder.api.RowDefinition') Closure rowDefinition) {
-        sheet.row(row, ConsumerWithDelegate.create(rowDefinition))
+        return sheet.row(row, ConsumerWithDelegate.create(rowDefinition))
     }
 
     static SheetDefinition group(SheetDefinition sheet, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = SheetDefinition) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.builder.api.SheetDefinition') Closure insideGroupDefinition) {
-        sheet.group(ConsumerWithDelegate.create(insideGroupDefinition))
+        return sheet.group(ConsumerWithDelegate.create(insideGroupDefinition))
     }
     static SheetDefinition collapse(SheetDefinition sheet, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = SheetDefinition) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.builder.api.SheetDefinition') Closure insideGroupDefinition) {
-        sheet.collapse(ConsumerWithDelegate.create(insideGroupDefinition))
+        return sheet.collapse(ConsumerWithDelegate.create(insideGroupDefinition))
     }
 
     /**
@@ -183,15 +183,15 @@ import space.jasan.support.groovy.closure.ConsumerWithDelegate
      * @param pageDefinition closure defining the page settings
      */
     static SheetDefinition page(SheetDefinition sheet, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = PageDefinition) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.builder.api.PageDefinition') Closure pageDefinition) {
-        sheet.page(ConsumerWithDelegate.create(pageDefinition))
+        return sheet.page(ConsumerWithDelegate.create(pageDefinition))
     }
 
     static SheetDefinition state(SheetDefinition self, Keywords.SheetState state) {
-        self.state(state)
+        return self.state(state)
     }
 
     static SheetCriterion state(SheetCriterion self, Keywords.SheetState state) {
-        self.state(state)
+        return self.state(state)
     }
 
     static void build(SpreadsheetBuilder builder, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = WorkbookDefinition) @ClosureParams(value = FromString, options = 'builders.dsl.spreadsheet.builder.api.WorkbookDefinition') Closure workbookDefinition) {
@@ -199,18 +199,18 @@ import space.jasan.support.groovy.closure.ConsumerWithDelegate
     }
 
     static WorkbookDefinition sheet(WorkbookDefinition workbook, String name, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = SheetDefinition) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.builder.api.SheetDefinition') Closure sheetDefinition) {
-        workbook.sheet(name, ConsumerWithDelegate.create(sheetDefinition))
+        return workbook.sheet(name, ConsumerWithDelegate.create(sheetDefinition))
     }
 
     static CellCriterion style(CellCriterion cell, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = CellStyleCriterion) @ClosureParams(value = FromString, options = 'builders.dsl.spreadsheet.query.api.CellStyleCriterion') Closure styleCriterion) {
-        cell.style(ConsumerWithDelegate.create(styleCriterion))
+        return cell.style(ConsumerWithDelegate.create(styleCriterion))
     }
     static CellCriterion or(CellCriterion cell, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = CellCriterion) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.query.api.CellCriterion') Closure sheetCriterion) {
-        cell.or(ConsumerWithDelegate.create(sheetCriterion))
+        return cell.or(ConsumerWithDelegate.create(sheetCriterion))
     }
 
     static CellStyleCriterion font(CellStyleCriterion style, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = FontCriterion) @ClosureParams(value = FromString, options = 'builders.dsl.spreadsheet.query.api.FontCriterion') Closure fontCriterion) {
-        style.font(ConsumerWithDelegate.create(fontCriterion))
+        return style.font(ConsumerWithDelegate.create(fontCriterion))
     }
 
     /**
@@ -218,7 +218,7 @@ import space.jasan.support.groovy.closure.ConsumerWithDelegate
      * @param borderConfiguration border configuration closure
      */
     static CellStyleCriterion border(CellStyleCriterion style, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = BorderCriterion) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.query.api.BorderCriterion') Closure borderConfiguration) {
-        style.border(ConsumerWithDelegate.create(borderConfiguration))
+        return style.border(ConsumerWithDelegate.create(borderConfiguration))
     }
 
     /**
@@ -227,7 +227,7 @@ import space.jasan.support.groovy.closure.ConsumerWithDelegate
      * @param borderConfiguration border configuration closure
      */
     static CellStyleCriterion border(CellStyleCriterion style, Keywords.BorderSide location, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = BorderCriterion) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.query.api.BorderCriterion') Closure borderConfiguration) {
-        style.border(location, ConsumerWithDelegate.create(borderConfiguration))
+        return style.border(location, ConsumerWithDelegate.create(borderConfiguration))
     }
 
     /**
@@ -237,7 +237,7 @@ import space.jasan.support.groovy.closure.ConsumerWithDelegate
      * @param borderConfiguration border configuration closure
      */
     static CellStyleCriterion border(CellStyleCriterion style, Keywords.BorderSide first, Keywords.BorderSide second, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = BorderCriterion) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.query.api.BorderCriterion') Closure borderConfiguration) {
-        style.border(first, second, ConsumerWithDelegate.create(borderConfiguration))
+        return style.border(first, second, ConsumerWithDelegate.create(borderConfiguration))
     }
 
     /**
@@ -248,68 +248,68 @@ import space.jasan.support.groovy.closure.ConsumerWithDelegate
      * @param borderConfiguration border configuration closure
      */
     static CellStyleCriterion border(CellStyleCriterion style, Keywords.BorderSide first, Keywords.BorderSide second, Keywords.BorderSide third, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = BorderCriterion) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.query.api.BorderCriterion') Closure borderConfiguration) {
-        style.border(first, second, third, ConsumerWithDelegate.create(borderConfiguration))
+        return style.border(first, second, third, ConsumerWithDelegate.create(borderConfiguration))
     }
 
     static RowCriterion cell(RowCriterion row, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = CellCriterion) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.query.api.CellCriterion') Closure cellCriterion) {
-        row.cell(ConsumerWithDelegate.create(cellCriterion))
+        return row.cell(ConsumerWithDelegate.create(cellCriterion))
     }
     static RowCriterion cell(RowCriterion row, int column, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = CellCriterion) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.query.api.CellCriterion') Closure cellCriterion) {
-        row.cell(column, ConsumerWithDelegate.create(cellCriterion))
+        return row.cell(column, ConsumerWithDelegate.create(cellCriterion))
     }
     static RowCriterion cell(RowCriterion row, String column, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = CellCriterion) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.query.api.CellCriterion') Closure cellCriterion) {
-        row.cell(column, ConsumerWithDelegate.create(cellCriterion))
+        return row.cell(column, ConsumerWithDelegate.create(cellCriterion))
     }
     static RowCriterion cell(RowCriterion row, int from, int to, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = CellCriterion) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.query.api.CellCriterion') Closure cellCriterion) {
-        row.cell(from, to, ConsumerWithDelegate.create(cellCriterion))
+        return row.cell(from, to, ConsumerWithDelegate.create(cellCriterion))
     }
     static RowCriterion cell(RowCriterion row, String from, String to, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = CellCriterion) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.query.api.CellCriterion') Closure cellCriterion) {
-        row.cell(from, to, ConsumerWithDelegate.create(cellCriterion))
+        return row.cell(from, to, ConsumerWithDelegate.create(cellCriterion))
     }
 
     static RowCriterion or(RowCriterion row, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = RowCriterion) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.query.api.RowCriterion') Closure rowCriterion) {
-        row.or(ConsumerWithDelegate.create(rowCriterion))
+        return row.or(ConsumerWithDelegate.create(rowCriterion))
     }
 
     static SheetCriterion row(SheetCriterion sheet, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = RowCriterion) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.query.api.RowCriterion') Closure rowCriterion) {
-        sheet.row(ConsumerWithDelegate.create(rowCriterion))
+        return sheet.row(ConsumerWithDelegate.create(rowCriterion))
     }
     static SheetCriterion row(SheetCriterion sheet, int row, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = RowCriterion) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.query.api.RowCriterion') Closure rowCriterion) {
-        sheet.row(row, ConsumerWithDelegate.create(rowCriterion))
+        return sheet.row(row, ConsumerWithDelegate.create(rowCriterion))
     }
     static SheetCriterion page(SheetCriterion sheet, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = PageCriterion) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.query.api.PageCriterion') Closure pageCriterion) {
-        sheet.page(ConsumerWithDelegate.create(pageCriterion))
+        return sheet.page(ConsumerWithDelegate.create(pageCriterion))
     }
     static SheetCriterion or(SheetCriterion sheet, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = SheetCriterion) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.query.api.SheetCriterion') Closure sheetCriterion) {
-        sheet.or(ConsumerWithDelegate.create(sheetCriterion))
+        return sheet.or(ConsumerWithDelegate.create(sheetCriterion))
     }
 
     static boolean asBoolean(SpreadsheetCriteriaResult result) {
-        result.sheets || result.rows || result.cells
+        return result.sheets || result.rows || result.cells
     }
 
     static SpreadsheetCriteriaResult query(SpreadsheetCriteria criteria, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = WorkbookCriterion) @ClosureParams(value = FromString, options = 'builders.dsl.spreadsheet.query.api.WorkbookCriterion') Closure workbookCriterion) throws FileNotFoundException {
-        criteria.query(ConsumerWithDelegate.create(workbookCriterion))
+        return criteria.query(ConsumerWithDelegate.create(workbookCriterion))
     }
     static Cell find(SpreadsheetCriteria criteria, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = WorkbookCriterion) @ClosureParams(value = FromString, options = 'builders.dsl.spreadsheet.query.api.WorkbookCriterion') Closure workbookCriterion) throws FileNotFoundException {
-        criteria.find(ConsumerWithDelegate.create(workbookCriterion))
+        return criteria.find(ConsumerWithDelegate.create(workbookCriterion))
     }
     static boolean exists(SpreadsheetCriteria criteria, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = WorkbookCriterion) @ClosureParams(value = FromString, options = 'builders.dsl.spreadsheet.query.api.WorkbookCriterion') Closure workbookCriterion) throws FileNotFoundException {
-        criteria.exists(ConsumerWithDelegate.create(workbookCriterion))
+        return criteria.exists(ConsumerWithDelegate.create(workbookCriterion))
     }
 
     static WorkbookCriterion sheet(WorkbookCriterion workbook, String name, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = SheetCriterion) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.query.api.SheetCriterion') Closure sheetCriterion) {
-        workbook.sheet(name, ConsumerWithDelegate.create(sheetCriterion))
+        return workbook.sheet(name, ConsumerWithDelegate.create(sheetCriterion))
     }
     static WorkbookCriterion sheet(WorkbookCriterion workbook, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = SheetCriterion) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.query.api.SheetCriterion') Closure sheetCriterion) {
-        workbook.sheet(ConsumerWithDelegate.create(sheetCriterion))
+        return workbook.sheet(ConsumerWithDelegate.create(sheetCriterion))
     }
     static WorkbookCriterion or(WorkbookCriterion workbook, @DelegatesTo(strategy = Closure.DELEGATE_FIRST, value = WorkbookCriterion) @ClosureParams(value=FromString, options = 'builders.dsl.spreadsheet.query.api.WorkbookCriterion') Closure workbookCriterion) {
-        workbook.or(ConsumerWithDelegate.create(workbookCriterion))
+        return workbook.or(ConsumerWithDelegate.create(workbookCriterion))
     }
 
     static Cell getAt(DataRow self, String name) {
-        self.get(name)
+        return self.get(name)
     }
 
     /**
@@ -318,7 +318,7 @@ import space.jasan.support.groovy.closure.ConsumerWithDelegate
      * This feature is currently experimental.
      */
     static CellDefinition getCm(DimensionModifier self) {
-        self.cm()
+        return self.cm()
     }
 
     /**
@@ -327,7 +327,7 @@ import space.jasan.support.groovy.closure.ConsumerWithDelegate
      * This feature is currently experimental.
      */
     static CellDefinition getInch(DimensionModifier self) {
-        self.inch()
+        return self.inch()
     }
 
     /**
@@ -336,7 +336,7 @@ import space.jasan.support.groovy.closure.ConsumerWithDelegate
      * This feature is currently experimental.
      */
     static CellDefinition getInches(DimensionModifier self) {
-        self.inches()
+        return self.inches()
     }
 
     /**
@@ -345,7 +345,7 @@ import space.jasan.support.groovy.closure.ConsumerWithDelegate
      * This feature is currently experimental.
      */
     static CellDefinition getPoints(DimensionModifier self) {
-        self.points()
+        return self.points()
     }
 
     static BorderStyle getNone(BorderStyleProvider self) {
@@ -605,19 +605,19 @@ import space.jasan.support.groovy.closure.ConsumerWithDelegate
     }
 
     static FontStyle getItalic(FontStylesProvider self) {
-        FontStyle.ITALIC
+        return FontStyle.ITALIC
     }
 
     static FontStyle getBold(FontStylesProvider self) {
-        FontStyle.BOLD
+        return FontStyle.BOLD
     }
 
     static FontStyle getStrikeout(FontStylesProvider self) {
-        FontStyle.STRIKEOUT
+        return FontStyle.STRIKEOUT
     }
 
     static FontStyle getUnderline(FontStylesProvider self) {
-        FontStyle.UNDERLINE
+        return FontStyle.UNDERLINE
     }
 
     static Keywords.BorderSideAndHorizontalAlignment getLeft(BorderPositionProvider self) {
@@ -704,8 +704,8 @@ import space.jasan.support.groovy.closure.ConsumerWithDelegate
     static Color getGreenYellow(ColorProvider colorProvider) { return Color.greenYellow }
     static Color getHoneyDew(ColorProvider colorProvider) { return Color.honeyDew }
     static Color getHotPink(ColorProvider colorProvider) { return Color.hotPink }
-    static Color getIndianRed (ColorProvider colorProvider) { return Color.indianRed  }
-    static Color getIndigo (ColorProvider colorProvider) { return Color.indigo  }
+    static Color getIndianRed(ColorProvider colorProvider) { return Color.indianRed  }
+    static Color getIndigo(ColorProvider colorProvider) { return Color.indigo  }
     static Color getIvory(ColorProvider colorProvider) { return Color.ivory }
     static Color getKhaki(ColorProvider colorProvider) { return Color.khaki }
     static Color getLavender(ColorProvider colorProvider) { return Color.lavender }
