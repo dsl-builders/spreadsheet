@@ -18,8 +18,7 @@
 dependencies {
     api project(':spreadsheet-builder-api')
 
-    implementation 'org.apache.poi:poi-ooxml:4.1.1'
-    implementation 'org.apache.poi:ooxml-schemas:1.4'
+    implementation "org.apache.poi:poi-ooxml:$poiVersion"
 
     testImplementation project(':spreadsheet-builder-tck-groovy')
 }

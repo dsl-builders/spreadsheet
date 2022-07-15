@@ -49,7 +49,7 @@ class PoiSheet implements Sheet {
 
     public List<builders.dsl.spreadsheet.api.Row> getRows() {
         if (rows == null) {
-            rows = new LinkedHashMap<Integer, PoiRow>(xssfSheet.getLastRowNum());
+            rows = new LinkedHashMap<Integer, PoiRow>();
             for (Row it : xssfSheet) {
                 int oneBasedIndex = it.getRowNum() + 1;
                 rows.put(oneBasedIndex, createRowWrapper(oneBasedIndex));
