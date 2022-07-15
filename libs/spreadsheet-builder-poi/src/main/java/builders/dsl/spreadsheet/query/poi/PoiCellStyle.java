@@ -112,13 +112,13 @@ class PoiCellStyle implements CellStyle {
     @Override
     public Border getBorder(Keywords.BorderSide borderSide) {
         if (Keywords.BorderSide.TOP.equals(borderSide)) {
-            return new PoiBorder(style.getBorderColor(XSSFCellBorder.BorderSide.TOP), style.getBorderTopEnum());
+            return new PoiBorder(style.getBorderColor(XSSFCellBorder.BorderSide.TOP), style.getBorderTop());
         } else if (Keywords.BorderSide.BOTTOM.equals(borderSide)) {
-            return new PoiBorder(style.getBorderColor(XSSFCellBorder.BorderSide.BOTTOM), style.getBorderBottomEnum());
+            return new PoiBorder(style.getBorderColor(XSSFCellBorder.BorderSide.BOTTOM), style.getBorderBottom());
         } else if (Keywords.BorderSide.LEFT.equals(borderSide)) {
-            return new PoiBorder(style.getBorderColor(XSSFCellBorder.BorderSide.LEFT), style.getBorderLeftEnum());
+            return new PoiBorder(style.getBorderColor(XSSFCellBorder.BorderSide.LEFT), style.getBorderLeft());
         } else if (Keywords.BorderSide.RIGHT.equals(borderSide)) {
-            return new PoiBorder(style.getBorderColor(XSSFCellBorder.BorderSide.RIGHT), style.getBorderRightEnum());
+            return new PoiBorder(style.getBorderColor(XSSFCellBorder.BorderSide.RIGHT), style.getBorderRight());
         }
         return new PoiBorder(null, null);
     }

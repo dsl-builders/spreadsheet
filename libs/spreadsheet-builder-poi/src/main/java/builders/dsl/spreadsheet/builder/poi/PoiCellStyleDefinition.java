@@ -70,7 +70,7 @@ class PoiCellStyleDefinition extends AbstractCellStyleDefinition {
         }
 
         style.setFillForegroundColor(parseColor(hexColor));
-        if (style.getFillPatternEnum().equals(FillPatternType.NO_FILL)) {
+        if (style.getFillPattern().equals(FillPatternType.NO_FILL)) {
             fill(ForegroundFill.SOLID_FOREGROUND);
         }
     }

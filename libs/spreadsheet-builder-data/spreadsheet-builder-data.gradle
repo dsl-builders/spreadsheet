@@ -25,5 +25,4 @@ dependencies {
     testImplementation project(':spreadsheet-builder-poi')
     testImplementation project(':spreadsheet-builder-tck-groovy')
     testImplementation "org.apache.poi:poi-ooxml:$poiVersion"
-    testImplementation "org.apache.poi:ooxml-schemas:$poiSchemasVersion"
 }

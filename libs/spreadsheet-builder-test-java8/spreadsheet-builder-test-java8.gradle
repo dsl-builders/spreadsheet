@@ -18,5 +18,4 @@
 dependencies {
     implementation project(':spreadsheet-builder-poi')
     implementation "org.apache.poi:poi-ooxml:$poiVersion"
-    implementation "org.apache.poi:ooxml-schemas:$poiSchemasVersion"
 }
