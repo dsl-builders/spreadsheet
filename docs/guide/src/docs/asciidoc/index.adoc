@@ -8,7 +8,7 @@ Documents (XSLX) focus not only on content side but also on easy styling.
 
 == Installation
 
-Spreadsheet Builder API is available on JCenter.
+Spreadsheet Builder API is available on Maven Central.
 
 [source,indent=0,role="primary",subs='attributes']
 .Gradle
@@ -16,7 +16,7 @@ Spreadsheet Builder API is available on JCenter.
 apply plugin: 'groovy'
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
