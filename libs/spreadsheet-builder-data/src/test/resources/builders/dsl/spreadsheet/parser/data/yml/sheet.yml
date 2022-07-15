@@ -109,9 +109,6 @@ sheets:
   - number: 3
     cells:
     - column: C
-      image:
-        type: png
-        url: https://goo.gl/UcL1wy
 - name: Rich Text
   rows:
   - cells:

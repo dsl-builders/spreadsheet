@@ -187,11 +187,7 @@
           "number": 3,
           "cells": [
             {
-              "column": "C",
-              "image": {
-                "type": "png",
-                "url": "https://goo.gl/UcL1wy"
-              }
+              "column": "C"
             }
           ]
         }
