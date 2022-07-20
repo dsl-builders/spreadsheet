@@ -9,7 +9,7 @@
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_comment">/*</em>
 <a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> * SPDX-License-Identifier: Apache-2.0</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_comment"> *</em>
-<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_comment"> * Copyright 2020 Vladimir Orany.</em>
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_comment"> * Copyright 2020-2022 Vladimir Orany.</em>
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_comment"> * Licensed under the Apache License, Version 2.0 (the "License");</em>
 <a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_comment"> * you may not use this file except in compliance with the License.</em>
@@ -65,18 +65,18 @@
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>          }
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>          
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>          <strong class="jxr_keyword">if</strong> (value instanceof LocalDate) {
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>          	cell.setCellValue((LocalDate) value);
-<a class="jxr_linenumber" name="L61" href="#L61">61</a>          	<strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>;
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>              cell.setCellValue((LocalDate) value);
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>              <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>;
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>          }
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>          
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>          <strong class="jxr_keyword">if</strong> (value instanceof LocalTime) {
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>          	cell.setCellValue(LocalDateTime.of(LocalDate.of(1900, 1, 1), (LocalTime) value));
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>          	<strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>;
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>              cell.setCellValue(LocalDateTime.of(LocalDate.of(1900, 1, 1), (LocalTime) value));
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>              <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>;
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>          }
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>  
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>          <strong class="jxr_keyword">if</strong> (value instanceof LocalDateTime) {
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>          	cell.setCellValue((LocalDateTime) value);
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>          	<strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>;
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>              cell.setCellValue((LocalDateTime) value);
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>              <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>;
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>          }
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>          
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>          <strong class="jxr_keyword">if</strong> (value instanceof Boolean) {
