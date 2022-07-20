@@ -28,7 +28,7 @@ jobs:
       - name: Semantic Version
         id: version
         uses: ncipollo/semantic-version-action@v1
-      - uses: eskatos/gradle-command-action@v3
+      - uses: eskatos/gradle-command-action@v2
         env:
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
