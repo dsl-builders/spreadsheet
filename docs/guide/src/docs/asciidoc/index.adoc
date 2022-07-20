@@ -4011,6 +4011,9 @@ The color you usually see in the cell is `foreground` not a `background` as you 
 
 == Changelog
 
+=== 3.0.0
+Upgraded to the latest Apache POI 5.x
+
 === 2.1.1
 Allowing adding groups for just single row or column
 
