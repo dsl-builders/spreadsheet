@@ -53,6 +53,10 @@ public class PoiSpreadsheetBuilder implements SpreadsheetBuilder {
         return new PoiSpreadsheetBuilder(new XSSFWorkbook(template), new FileOutputStream(file));
     }
 
+    public static SpreadsheetBuilder prepare(Workbook workbook) {
+        return new PoiSpreadsheetBuilder(workbook, null);
+    }
+
     public static SpreadsheetBuilder stream(OutputStream out) {
         return new PoiSpreadsheetBuilder(new SXSSFWorkbook(), out);
     }
@@ -90,7 +94,9 @@ public class PoiSpreadsheetBuilder implements SpreadsheetBuilder {
         PoiWorkbookDefinition poiWorkbook = new PoiWorkbookDefinition(workbook);
         workbookDefinition.accept(poiWorkbook);
         poiWorkbook.resolve();
-        writeTo(outputStream);
+        if (outputStream != null) {
+            writeTo(outputStream);
+        }
     }
 
     private void writeTo(OutputStream outputStream) {
