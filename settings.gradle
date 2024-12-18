@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * Copyright 2020-2022 Vladimir Orany.
+ * Copyright 2020-2024 Vladimir Orany.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,18 @@ buildscript {
     }
 }
 
-apply plugin: 'org.kordamp.gradle.settings'
+plugins {
+    id 'org.kordamp.gradle.settings' version "$kordampVersion"
+    id 'com.gradle.enterprise' version '3.15.1'
+}
+
+gradleEnterprise {
+    buildScan {
+        publishAlways()
+        termsOfServiceUrl = "https://gradle.com/terms-of-service"
+        termsOfServiceAgree = "yes"
+    }
+}
 
 rootProject.name = 'spreadsheet'
 

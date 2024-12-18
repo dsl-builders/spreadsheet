@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * Copyright 2020-2022 Vladimir Orany.
+ * Copyright 2020-2024 Vladimir Orany.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,17 +17,20 @@
  */
 package builders.dsl.spreadsheet.builder.api.tck.java8;
 
-import builders.dsl.spreadsheet.api.*;
+import builders.dsl.spreadsheet.api.Cell;
+import builders.dsl.spreadsheet.api.DataRow;
+import builders.dsl.spreadsheet.api.ForegroundFill;
+import builders.dsl.spreadsheet.api.Keywords;
+import builders.dsl.spreadsheet.api.Row;
 import builders.dsl.spreadsheet.builder.api.SpreadsheetBuilder;
 import builders.dsl.spreadsheet.builder.poi.PoiSpreadsheetBuilder;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
 import builders.dsl.spreadsheet.builder.api.CellDefinition;
 import builders.dsl.spreadsheet.query.api.SpreadsheetCriteria;
 import builders.dsl.spreadsheet.query.api.SpreadsheetCriteriaResult;
 import builders.dsl.spreadsheet.query.poi.PoiSpreadsheetCriteria;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,18 +42,16 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
 import static builders.dsl.spreadsheet.api.Color.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class Java8BuilderTest {
+class JavaBuilderTest {
 
-    @Rule public TemporaryFolder tmp = new TemporaryFolder();
+    @TempDir File tmp;
 
-    @Test public void testBuilder() throws IOException {
-        File excel = tmp.newFile();
+    @Test
+    void testBuilder() throws IOException {
+        File excel = new File(tmp, System.currentTimeMillis() + ".xlsx");
         PoiSpreadsheetBuilder.create(excel).build(w ->
             w.sheet("test", s ->
                 s.row(r ->
@@ -72,12 +73,12 @@ public class Java8BuilderTest {
         ).getCells().size());
     }
 
-    @Test public void testBuilderFull() throws IOException, InvalidFormatException {
+    @Test void testBuilderFull() throws IOException, InvalidFormatException {
         Date today = new Date();
         LocalDate localDate = LocalDate.of(2019, 9, 1);
         LocalDateTime localDateTime = LocalDateTime.of(2019, 9, 1, 10, 33);
         LocalTime localTime = LocalTime.of(10, 33, 0);
-        File excel = tmp.newFile();
+        File excel = new File(tmp, System.currentTimeMillis() + ".xlsx");
 
         buildSpreadsheet(PoiSpreadsheetBuilder.create(excel), today, localDate, localTime, localDateTime);
 
@@ -495,7 +496,7 @@ public class Java8BuilderTest {
             });
         }).getSheets().size());
 
-        File tmpFile = tmp.newFile();
+        File tmpFile = new File(tmp, System.currentTimeMillis() + ".xlsx");
 
         PoiSpreadsheetBuilder.create(tmpFile, excel).build(w -> {
             w.sheet("Sample", s -> {

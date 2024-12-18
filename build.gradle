@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * Copyright 2020-2022 Vladimir Orany.
+ * Copyright 2020-2024 Vladimir Orany.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -108,9 +108,6 @@ config {
                 enabled = false
             }
         }
-        sourceHtml {
-            enabled = false
-        }
     }
 }
 
@@ -148,14 +145,24 @@ subprojects { subproject ->
         }
     }
 
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(javaVersion)
+        }
+    }
 
     dependencies {
         testImplementation "org.spockframework:spock-core:$spockVersion"
+        testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+        testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+
     }
 
     jar {
         manifest.attributes provider: 'gradle'
+    }
+
+    test {
+        useJUnitPlatform()
     }
 }
