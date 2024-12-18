@@ -25,12 +25,12 @@ import builders.dsl.spreadsheet.query.api.SpreadsheetCriteria
 import builders.dsl.spreadsheet.query.poi.PoiSpreadsheetCriteria
 import com.fasterxml.jackson.databind.ObjectMapper
 import spock.lang.Shared
-import spock.lang.TempDir
+
+import java.nio.file.Files
 
 class DataSpreadsheetBuilderSpec extends AbstractBuilderSpec {
 
     @Shared ObjectMapper mapper = new ObjectMapper()
-    @TempDir File tmp
 
     File spreadsheetFile
     File jsonFile
@@ -38,6 +38,7 @@ class DataSpreadsheetBuilderSpec extends AbstractBuilderSpec {
     DataSpreadsheetBuilder builder = DataSpreadsheetBuilder.create()
 
     void setup() {
+        File tmp = Files.createTempFile('data-spreadsheet', '').toFile()
         spreadsheetFile = new File(tmp, "sample${System.currentTimeMillis()}.xlsx")
         jsonFile = new File(tmp, "sample${System.currentTimeMillis()}.json")
     }
