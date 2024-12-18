@@ -17,9 +17,6 @@
  */
 package builders.dsl.spreadsheet.parser.data;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
 import builders.dsl.spreadsheet.api.Cell;
 import builders.dsl.spreadsheet.api.DataRow;
 import builders.dsl.spreadsheet.api.Keywords;
@@ -29,8 +26,10 @@ import builders.dsl.spreadsheet.builder.poi.PoiSpreadsheetBuilder;
 import builders.dsl.spreadsheet.query.api.SpreadsheetCriteria;
 import builders.dsl.spreadsheet.query.api.SpreadsheetCriteriaResult;
 import builders.dsl.spreadsheet.query.poi.PoiSpreadsheetCriteria;
+import org.junit.jupiter.api.Test;
+import spock.lang.TempDir;
 
-import java.awt.*;
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.time.ZonedDateTime;
@@ -39,18 +38,20 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.*;
 import static builders.dsl.spreadsheet.api.Color.*;
 import static builders.dsl.spreadsheet.api.Keywords.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class AbstractBuilderTest {
 
     private static final Date EXPECTED_DATE = Date.from(ZonedDateTime.parse("2017-07-29T03:07:16.404Z", DateTimeFormatter.ISO_DATE_TIME).toInstant());
 
-    @Rule public TemporaryFolder tmp = new TemporaryFolder();
+    @TempDir
+    public File tmp;
 
-    @Test public void testTrivial() throws IOException {
-        File excel = tmp.newFile();
+    @Test
+    public void testTrivial() throws IOException {
+        File excel = new File(tmp, System.currentTimeMillis() + ".xlsx");
         SpreadsheetBuilder builder = PoiSpreadsheetBuilder.create(excel);
         try {
             build(builder, "trivial");
@@ -67,7 +68,7 @@ public abstract class AbstractBuilderTest {
     }
 
     @Test public void testDate() throws IOException, InterruptedException {
-        File excel = tmp.newFile(System.currentTimeMillis() + ".xlsx");
+        File excel = new File(tmp, System.currentTimeMillis() + ".xlsx");
         SpreadsheetBuilder builder = PoiSpreadsheetBuilder.create(excel);
         try {
             build(builder, "date");
@@ -93,7 +94,7 @@ public abstract class AbstractBuilderTest {
     }
 
     @Test public void testTextContent() throws IOException, InterruptedException {
-        File excel = tmp.newFile(System.currentTimeMillis() + ".xlsx");
+        File excel = new File(tmp, System.currentTimeMillis() + ".xlsx");
         SpreadsheetBuilder builder = PoiSpreadsheetBuilder.create(excel);
         try {
             build(builder, "texts");
@@ -119,7 +120,7 @@ public abstract class AbstractBuilderTest {
     }
 
     @Test public void testBuilderFull() throws IOException, InterruptedException {
-        File excel = tmp.newFile(System.currentTimeMillis() + ".xlsx");
+        File excel = new File(tmp, System.currentTimeMillis() + ".xlsx");
         SpreadsheetBuilder builder = PoiSpreadsheetBuilder.create(excel);
         try {
             build(builder, "sheet");

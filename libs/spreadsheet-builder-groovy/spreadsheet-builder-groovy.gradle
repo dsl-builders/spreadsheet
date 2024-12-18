@@ -18,5 +18,5 @@
 dependencies {
     api project(':spreadsheet-builder-api')
     implementation "space.jasan:groovy-closure-support:$closureSupportVersion"
-    implementation "org.codehaus.groovy:groovy:$groovyVersion"
+    implementation "org.apache.groovy:groovy:$groovyVersion"
 }
