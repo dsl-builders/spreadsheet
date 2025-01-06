@@ -17,7 +17,7 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: zulu
-          java-version: 8
+          java-version: 17
       - name: Decrypt Stored Credentials
         run: ./libs/spreadsheet-builder-google/tokens/decrypt_secret.sh
       - uses: gradle/gradle-command-action@v2
