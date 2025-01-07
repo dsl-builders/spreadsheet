@@ -153,16 +153,9 @@ subprojects { subproject ->
 
     dependencies {
         testImplementation "org.spockframework:spock-core:$spockVersion"
-        testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
-        testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
-
     }
 
     jar {
         manifest.attributes provider: 'gradle'
-    }
-
-    test {
-        useJUnitPlatform()
     }
 }
