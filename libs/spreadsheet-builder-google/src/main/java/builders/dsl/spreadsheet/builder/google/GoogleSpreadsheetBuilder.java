@@ -134,11 +134,7 @@ public class GoogleSpreadsheetBuilder implements SpreadsheetBuilder {
         }
 
         return spreadsheets.updateAndConvert(id, name, out -> {
-            try {
-                PoiSpreadsheetBuilder.create(out, template).build(workbookDefinition);
-            } catch (IOException e) {
-                throw new IllegalArgumentException("Problem reading file's template from " + template, e);
-            }
+            PoiSpreadsheetBuilder.create(out, template).build(workbookDefinition);
         });
     }
 
