@@ -1,4 +1,4 @@
-= Groovy Spreadsheet Builder
+= Spreadsheet Builder
 
 Spreadsheet builder provides convenient way how to create MS Excel OfficeOpenXML
 Documents (XSLX) focus not only on content side but also on easy styling. 
