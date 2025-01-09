@@ -117,6 +117,10 @@ public class PoiSpreadsheetBuilder implements SpreadsheetBuilder {
             if (closeWorkbook && workbook != null) {
                 try {
                     workbook.close();
+                    if (workbook instanceof SXSSFWorkbook) {
+                        SXSSFWorkbook sxssfWorkbook = (SXSSFWorkbook) workbook;
+                        sxssfWorkbook.dispose();
+                    }
                 } catch (IOException e) {
                     System.getLogger(PoiSpreadsheetBuilder.class.getName()).log(System.Logger.Level.ERROR, "Exception closing workbook", e);
                 }
