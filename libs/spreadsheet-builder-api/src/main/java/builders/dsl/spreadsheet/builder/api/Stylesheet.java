@@ -17,7 +17,15 @@
  */
 package builders.dsl.spreadsheet.builder.api;
 
-public interface Stylesheet {
+import builders.dsl.spreadsheet.api.BorderPositionProvider;
+import builders.dsl.spreadsheet.api.BorderStyleProvider;
+import builders.dsl.spreadsheet.api.ColorProvider;
+import builders.dsl.spreadsheet.api.FontStylesProvider;
+import builders.dsl.spreadsheet.api.ForegroundFillProvider;
+import builders.dsl.spreadsheet.api.PageSettingsProvider;
+import builders.dsl.spreadsheet.api.SheetStateProvider;
+
+public interface Stylesheet extends BorderPositionProvider, BorderStyleProvider, ColorProvider, FontStylesProvider, ForegroundFillProvider, PageSettingsProvider, SheetStateProvider {
 
     void declareStyles(CanDefineStyle stylable);
 

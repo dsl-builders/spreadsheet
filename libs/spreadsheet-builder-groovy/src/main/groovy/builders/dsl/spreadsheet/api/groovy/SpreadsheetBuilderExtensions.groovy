@@ -798,7 +798,7 @@ import java.util.function.Consumer
     static Keywords.SheetState getVeryHidden(SheetStateProvider self) { return Keywords.SheetState.VERY_HIDDEN }
 
     private static <T> Consumer<T> consumer(Object closure) {
-        return ConsumerWithDelegate.create((Closure) closure)
+        return ConsumerWithDelegate.create((Closure) closure, Closure.DELEGATE_FIRST)
     }
 
 }
