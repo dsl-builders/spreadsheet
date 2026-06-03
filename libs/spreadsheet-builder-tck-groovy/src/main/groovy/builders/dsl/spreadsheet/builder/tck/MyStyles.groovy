@@ -18,8 +18,6 @@
 package builders.dsl.spreadsheet.builder.tck
 
 import builders.dsl.spreadsheet.builder.api.CanDefineStyle
-import builders.dsl.spreadsheet.builder.api.CellStyleDefinition
-import builders.dsl.spreadsheet.builder.api.FontDefinition
 import builders.dsl.spreadsheet.builder.api.Stylesheet
 import groovy.transform.CompileStatic
 
@@ -30,17 +28,17 @@ import groovy.transform.CompileStatic
 class MyStyles implements Stylesheet {
 
     void declareStyles(CanDefineStyle stylable) {
-        stylable.style('h1') { CellStyleDefinition style ->
-            style.foreground style.whiteSmoke
-            style.fill style.solidForeground
-            style.font { FontDefinition font ->
-                font.size 22
+        stylable.style('h1') {
+            foreground whiteSmoke
+            fill solidForeground
+            font {
+                size 22
             }
         }
-        stylable.style('h2') { CellStyleDefinition style ->
-            style.base 'h1'
-            style.font { FontDefinition font ->
-                font.size 16
+        stylable.style('h2') {
+            base 'h1'
+            font {
+                size 16
             }
         }
     }
