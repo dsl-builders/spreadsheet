@@ -29,7 +29,7 @@ class PoiCellStyleSpec extends Specification {
         XSSFColor color = PoiCellStyleDefinition.parseColor(hex)
 
         then:
-        color.RGB == [r, g, b] as byte[]
+        Arrays.equals(color.getRGB(), [r, g, b] as byte[])
 
         where:
         hex         | r     | g     | b

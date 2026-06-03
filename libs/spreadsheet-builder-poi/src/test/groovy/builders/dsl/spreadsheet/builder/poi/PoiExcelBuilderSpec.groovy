@@ -17,21 +17,20 @@
  */
 package builders.dsl.spreadsheet.builder.poi
 
-import org.junit.Rule
-import org.junit.rules.TemporaryFolder
 import builders.dsl.spreadsheet.builder.api.SpreadsheetBuilder
 import builders.dsl.spreadsheet.builder.tck.AbstractBuilderSpec
 import builders.dsl.spreadsheet.query.api.SpreadsheetCriteria
 import builders.dsl.spreadsheet.query.poi.PoiSpreadsheetCriteria
+import spock.lang.TempDir
 
 class PoiExcelBuilderSpec extends AbstractBuilderSpec {
 
-    @Rule TemporaryFolder tmp = new TemporaryFolder()
+    @TempDir File tmp
 
     File tmpFile
 
     void setup() {
-        tmpFile = tmp.newFile("sample${System.currentTimeMillis()}.xlsx")
+        tmpFile = new File(tmp, "sample${System.currentTimeMillis()}.xlsx")
     }
 
     @Override

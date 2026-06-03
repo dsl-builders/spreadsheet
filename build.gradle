@@ -76,7 +76,7 @@ config {
         }
 
         codenarc {
-            toolVersion = '1.5'
+            toolVersion = '3.7.0-groovy-4.0'
         }
     }
 
@@ -129,7 +129,13 @@ subprojects { subproject ->
     }
 
     dependencies {
+        testImplementation 'junit:junit:4.13.2'
         testImplementation "org.spockframework:spock-core:$spockVersion"
+        testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:6.0.1'
+    }
+
+    test {
+        useJUnitPlatform()
     }
 
     mavenPublishing {

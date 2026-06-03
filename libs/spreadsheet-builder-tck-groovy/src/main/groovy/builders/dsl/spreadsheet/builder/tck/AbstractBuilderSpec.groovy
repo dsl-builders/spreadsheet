@@ -22,7 +22,6 @@ import builders.dsl.spreadsheet.api.Color
 import builders.dsl.spreadsheet.api.DataRow
 import builders.dsl.spreadsheet.api.ForegroundFill
 import builders.dsl.spreadsheet.api.Row
-import groovy.transform.CompileStatic
 import builders.dsl.spreadsheet.builder.api.SpreadsheetBuilder
 import builders.dsl.spreadsheet.query.api.SpreadsheetCriteria
 import builders.dsl.spreadsheet.query.api.SpreadsheetCriteriaResult
@@ -458,7 +457,6 @@ abstract class AbstractBuilderSpec extends Specification {
             'FactoryMethodName',
             'BracesForForLoop',
     ])
-    @CompileStatic
     private static void buildSpreadsheet(SpreadsheetBuilder builder, Date today) {
         builder.build {
             style 'red', {
