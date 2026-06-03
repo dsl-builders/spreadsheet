@@ -141,6 +141,35 @@ subprojects { subproject ->
     mavenPublishing {
         publishToMavenCentral()
 
+        pom {
+            name = rootProject.config.info.name
+            description = rootProject.config.info.description
+            url = "https://github.com/${slug}"
+            inceptionYear = '2020'
+
+            licenses {
+                license {
+                    name = 'Apache-2.0'
+                    url = 'https://spdx.org/licenses/Apache-2.0.html'
+                    distribution = 'repo'
+                }
+            }
+
+            developers {
+                developer {
+                    id = 'musketyr'
+                    name = 'Vladimir Orany'
+                    roles = ['developer']
+                }
+            }
+
+            scm {
+                url = "https://github.com/${slug}.git"
+                connection = "scm:git:https://github.com/${slug}.git"
+                developerConnection = "scm:git:ssh://git@github.com/${slug}.git"
+            }
+        }
+
         if (rootProject.config.release) {
             signAllPublications()
         }

@@ -35,7 +35,6 @@ import builders.dsl.spreadsheet.builder.api.*
 import builders.dsl.spreadsheet.query.api.*
 import builders.dsl.spreadsheet.builder.api.CellDefinition
 import groovy.transform.CompileStatic
-import groovy.transform.TypeCheckingMode
 import groovy.transform.stc.ClosureParams
 import groovy.transform.stc.FromString
 import space.jasan.support.groovy.closure.ConsumerWithDelegate
@@ -798,9 +797,8 @@ import java.util.function.Consumer
     static Keywords.SheetState getHidden(SheetStateProvider self) { return Keywords.SheetState.HIDDEN }
     static Keywords.SheetState getVeryHidden(SheetStateProvider self) { return Keywords.SheetState.VERY_HIDDEN }
 
-    @CompileStatic(TypeCheckingMode.SKIP)
-    private static <T> Consumer<T> consumer(@DelegatesTo(strategy = Closure.DELEGATE_FIRST) Closure closure) {
-        return ConsumerWithDelegate.create(closure)
+    private static <T> Consumer<T> consumer(Object closure) {
+        return ConsumerWithDelegate.create((Closure) closure)
     }
 
 }
