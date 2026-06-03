@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * Copyright 2020-2025 Vladimir Orany.
+ * Copyright 2020-2026 Vladimir Orany.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -487,10 +487,10 @@ public abstract class AbstractBuilderTest {
     protected abstract void build(SpreadsheetBuilder builder, String sheet) throws Exception;
 
     private void open(File excel) throws IOException, InterruptedException {
-        if (System.getenv("CI") == null && Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
+        if (System.getenv("CI") == null && Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
             Desktop.getDesktop().open(excel);
-            Thread.sleep(3000);
+            // give it a moment to open
+            Thread.sleep(1000);
         }
     }
-
 }
