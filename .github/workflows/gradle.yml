@@ -9,8 +9,6 @@ jobs:
       GRADLE_OPTS: "-Xmx6g -Xms4g"
       CI: true
       COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-      DSL_SPREADSHEET_BUILDER_GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_SECRET }}
-      LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
 
     steps:
       - uses: actions/checkout@v4
@@ -19,7 +17,5 @@ jobs:
           distribution: zulu
           java-version: 11
       - uses: gradle/actions/setup-gradle@v4
-      - name: Decrypt Stored Credentials
-        run: ./libs/spreadsheet-builder-google/tokens/decrypt_secret.sh
       - name: Check
         run: ./gradlew check coveralls --stacktrace
