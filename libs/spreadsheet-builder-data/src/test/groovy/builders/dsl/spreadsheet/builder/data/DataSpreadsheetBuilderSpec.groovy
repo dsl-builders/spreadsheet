@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * Copyright 2020-2025 Vladimir Orany.
+ * Copyright 2020-2026 Vladimir Orany.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,14 +24,13 @@ import builders.dsl.spreadsheet.parser.data.json.JsonSpreadsheetParser
 import builders.dsl.spreadsheet.query.api.SpreadsheetCriteria
 import builders.dsl.spreadsheet.query.poi.PoiSpreadsheetCriteria
 import com.fasterxml.jackson.databind.ObjectMapper
-import org.junit.Rule
-import org.junit.rules.TemporaryFolder
 import spock.lang.Shared
+import spock.lang.TempDir
 
 class DataSpreadsheetBuilderSpec extends AbstractBuilderSpec {
 
     @Shared ObjectMapper mapper = new ObjectMapper()
-    @Rule TemporaryFolder tmp = new TemporaryFolder()
+    @TempDir File tmp
 
     File spreadsheetFile
     File jsonFile
@@ -39,8 +38,8 @@ class DataSpreadsheetBuilderSpec extends AbstractBuilderSpec {
     DataSpreadsheetBuilder builder = DataSpreadsheetBuilder.create()
 
     void setup() {
-        spreadsheetFile = tmp.newFile("sample${System.currentTimeMillis()}.xlsx")
-        jsonFile = tmp.newFile("sample${System.currentTimeMillis()}.json")
+        spreadsheetFile = new File(tmp, "sample${System.currentTimeMillis()}.xlsx")
+        jsonFile = new File(tmp, "sample${System.currentTimeMillis()}.json")
     }
 
     @Override

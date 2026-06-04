@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * Copyright 2020-2025 Vladimir Orany.
+ * Copyright 2020-2026 Vladimir Orany.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,14 +20,7 @@ plugins {
     id 'org.kordamp.gradle.checkstyle'
     id 'org.kordamp.gradle.codenarc'
     id 'org.kordamp.gradle.coveralls'
-    id 'io.github.gradle-nexus.publish-plugin'
 }
-
-if (!project.hasProperty('ossrhUsername'))      ext.ossrhUsername       = System.getenv('SONATYPE_USERNAME') ?: '**UNDEFINED**'
-if (!project.hasProperty('ossrhPassword'))      ext.ossrhPassword       = System.getenv('SONATYPE_PASSWORD') ?: '**UNDEFINED**'
-if (!project.hasProperty('signingKeyId'))       ext.signingKeyId        = System.getenv('SIGNING_KEY_ID') ?: '**UNDEFINED**'
-if (!project.hasProperty('signingPassword'))    ext.signingPassword     = System.getenv('SIGNING_PASSWORD') ?: '**UNDEFINED**'
-if (!project.hasProperty('signingSecretKey'))   ext.signingSecretKey    = System.getenv('SIGNING_SECRET_KEY_PATH') ? rootProject.file(System.getenv('SIGNING_SECRET_KEY_PATH')).text : '**UNDEFINED**'
 
 config {
     release = (rootProject.findProperty('release') ?: false).toBoolean()
@@ -73,12 +66,6 @@ config {
 
     publishing {
         enabled = false
-        signing {
-            enabled = signingSecretKey != '**UNDEFINED**'
-            keyId = signingKeyId
-            secretKey = signingSecretKey
-            password = signingPassword
-        }
         releasesRepository = 'localRelease'
         snapshotsRepository = 'localSnapshot'
     }
@@ -89,7 +76,7 @@ config {
         }
 
         codenarc {
-            toolVersion = '1.5'
+            toolVersion = '3.7.0-groovy-4.0'
         }
     }
 
@@ -111,17 +98,6 @@ config {
     }
 }
 
-nexusPublishing {
-    repositories {
-        sonatype {
-            // nexusUrl = uri('https://s01.oss.sonatype.org/service/local/')
-            // snapshotRepositoryUrl = uri('https://s01.oss.sonatype.org/content/repositories/snapshots/')
-            username = ossrhUsername
-            password = ossrhPassword
-        }
-    }
-}
-
 allprojects {
     repositories {
         mavenCentral()
@@ -138,6 +114,7 @@ subprojects { subproject ->
 
     apply plugin: 'java-library'
     apply plugin: 'groovy'
+    apply plugin: 'com.vanniktech.maven.publish.base'
 
     config {
         publishing {
@@ -152,7 +129,50 @@ subprojects { subproject ->
     }
 
     dependencies {
+        testImplementation 'junit:junit:4.13.2'
         testImplementation "org.spockframework:spock-core:$spockVersion"
+        testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:6.0.1'
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+
+    mavenPublishing {
+        publishToMavenCentral()
+
+        pom {
+            name = rootProject.config.info.name
+            description = rootProject.config.info.description
+            url = "https://github.com/${slug}"
+            inceptionYear = '2020'
+
+            licenses {
+                license {
+                    name = 'Apache-2.0'
+                    url = 'https://spdx.org/licenses/Apache-2.0.html'
+                    distribution = 'repo'
+                }
+            }
+
+            developers {
+                developer {
+                    id = 'musketyr'
+                    name = 'Vladimir Orany'
+                    roles = ['developer']
+                }
+            }
+
+            scm {
+                url = "https://github.com/${slug}.git"
+                connection = "scm:git:https://github.com/${slug}.git"
+                developerConnection = "scm:git:ssh://git@github.com/${slug}.git"
+            }
+        }
+
+        if (rootProject.config.release) {
+            signAllPublications()
+        }
     }
 
     jar {

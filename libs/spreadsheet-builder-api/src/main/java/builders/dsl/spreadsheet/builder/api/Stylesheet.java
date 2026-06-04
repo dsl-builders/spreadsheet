@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * Copyright 2020-2025 Vladimir Orany.
+ * Copyright 2020-2026 Vladimir Orany.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,15 @@
  */
 package builders.dsl.spreadsheet.builder.api;
 
-public interface Stylesheet {
+import builders.dsl.spreadsheet.api.BorderPositionProvider;
+import builders.dsl.spreadsheet.api.BorderStyleProvider;
+import builders.dsl.spreadsheet.api.ColorProvider;
+import builders.dsl.spreadsheet.api.FontStylesProvider;
+import builders.dsl.spreadsheet.api.ForegroundFillProvider;
+import builders.dsl.spreadsheet.api.PageSettingsProvider;
+import builders.dsl.spreadsheet.api.SheetStateProvider;
+
+public interface Stylesheet extends BorderPositionProvider, BorderStyleProvider, ColorProvider, FontStylesProvider, ForegroundFillProvider, PageSettingsProvider, SheetStateProvider {
 
     void declareStyles(CanDefineStyle stylable);
 

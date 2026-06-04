@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
  *
- * Copyright 2020-2025 Vladimir Orany.
+ * Copyright 2020-2026 Vladimir Orany.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ class PoiCellStyleSpec extends Specification {
         XSSFColor color = PoiCellStyleDefinition.parseColor(hex)
 
         then:
-        color.RGB == [r, g, b] as byte[]
+        Arrays.equals(color.getRGB(), [r, g, b] as byte[])
 
         where:
         hex         | r     | g     | b
