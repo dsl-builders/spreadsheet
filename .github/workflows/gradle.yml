@@ -23,3 +23,7 @@ jobs:
         run: ./libs/spreadsheet-builder-google/tokens/decrypt_secret.sh
       - name: Check
         run: ./gradlew check coveralls --stacktrace
+      - name: Print test reports
+        if: failure()
+        run: |
+          find . -path '*/build/test-results/test/*.xml' -print -exec sed -n '1,220p' {} \;
