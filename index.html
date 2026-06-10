@@ -9,10 +9,10 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <link rel="stylesheet" href="./asciidoctor.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="css/spreadsheet-builder.css?v=4.0.0" />
-<link rel="stylesheet" href="css/codeBlockSwitch.css?v=4.0.0" />
+<link rel="stylesheet" href="css/spreadsheet-builder.css?v=4.0.1" />
+<link rel="stylesheet" href="css/codeBlockSwitch.css?v=4.0.1" />
 <script src="https://code.jquery.com/jquery-3.5.0.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
-<script src="js/codeBlockSwitch.js?v=4.0.0"></script>
+<script src="js/codeBlockSwitch.js?v=4.0.1"></script>
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -104,112 +104,111 @@ $(addBlockSwitches);
 <div id="header">
 <h1>Spreadsheet Builder</h1>
 <div class="details">
-<span id="revnumber">version 4.0.0</span>
+<span id="revnumber">version 4.0.1</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#_installation">1. Installation</a></li>
-<li><a href="#_rest_api">2. REST API</a></li>
-<li><a href="#_writing_spreadsheets">3. Writing Spreadsheets</a>
+<li><a href="#_writing_spreadsheets">2. Writing Spreadsheets</a>
 <ul class="sectlevel2">
-<li><a href="#_sheets_and_rows">3.1. Sheets and Rows</a>
+<li><a href="#_sheets_and_rows">2.1. Sheets and Rows</a>
 <ul class="sectlevel3">
-<li><a href="#_outlines">3.1.1. Outlines</a></li>
-<li><a href="#_freezing_columns_and_rows">3.1.2. Freezing columns and rows</a></li>
-<li><a href="#_protection">3.1.3. Protection</a></li>
-<li><a href="#_visibility">3.1.4. Visibility</a></li>
-<li><a href="#_automatic_filters">3.1.5. Automatic Filters</a></li>
-<li><a href="#_page_settings">3.1.6. Page Settings</a></li>
+<li><a href="#_outlines">2.1.1. Outlines</a></li>
+<li><a href="#_freezing_columns_and_rows">2.1.2. Freezing columns and rows</a></li>
+<li><a href="#_protection">2.1.3. Protection</a></li>
+<li><a href="#_visibility">2.1.4. Visibility</a></li>
+<li><a href="#_automatic_filters">2.1.5. Automatic Filters</a></li>
+<li><a href="#_page_settings">2.1.6. Page Settings</a></li>
 </ul>
 </li>
-<li><a href="#_cells">3.2. Cells</a>
+<li><a href="#_cells">2.2. Cells</a>
 <ul class="sectlevel3">
-<li><a href="#_type_handling">3.2.1. Type handling</a></li>
-<li><a href="#_merging_cells">3.2.2. Merging cells</a></li>
-<li><a href="#_images">3.2.3. Images</a></li>
-<li><a href="#_comments">3.2.4. Comments</a></li>
-<li><a href="#_names">3.2.5. Names</a></li>
-<li><a href="#_links">3.2.6. Links</a></li>
-<li><a href="#_dimensions">3.2.7. Dimensions</a></li>
+<li><a href="#_type_handling">2.2.1. Type handling</a></li>
+<li><a href="#_merging_cells">2.2.2. Merging cells</a></li>
+<li><a href="#_images">2.2.3. Images</a></li>
+<li><a href="#_comments">2.2.4. Comments</a></li>
+<li><a href="#_names">2.2.5. Names</a></li>
+<li><a href="#_links">2.2.6. Links</a></li>
+<li><a href="#_dimensions">2.2.7. Dimensions</a></li>
 </ul>
 </li>
-<li><a href="#_styles">3.3. Styles</a>
+<li><a href="#_styles">2.3. Styles</a>
 <ul class="sectlevel3">
-<li><a href="#_alignments">3.3.1. Alignments</a></li>
-<li><a href="#_fills">3.3.2. Fills</a>
+<li><a href="#_alignments">2.3.1. Alignments</a></li>
+<li><a href="#_fills">2.3.2. Fills</a>
 <ul class="sectlevel4">
 <li><a href="#_available_predefined_colors">Available predefined colors</a></li>
 <li><a href="#_available_fill_values">Available fill values</a></li>
 </ul>
 </li>
-<li><a href="#_borders">3.3.3. Borders</a>
+<li><a href="#_borders">2.3.3. Borders</a>
 <ul class="sectlevel4">
 <li><a href="#_available_border_styles">Available border styles</a></li>
 </ul>
 </li>
-<li><a href="#_fonts">3.3.4. Fonts</a></li>
-<li><a href="#_rich_texts">3.3.5. Rich Texts</a></li>
-<li><a href="#_data_formats">3.3.6. Data formats</a></li>
-<li><a href="#_indentations">3.3.7. Indentations</a></li>
-<li><a href="#_rotation">3.3.8. Rotation</a></li>
-<li><a href="#_text_wrap">3.3.9. Text wrap</a></li>
-<li><a href="#_reusing_styles">3.3.10. Reusing Styles</a></li>
+<li><a href="#_fonts">2.3.4. Fonts</a></li>
+<li><a href="#_rich_texts">2.3.5. Rich Texts</a></li>
+<li><a href="#_data_formats">2.3.6. Data formats</a></li>
+<li><a href="#_indentations">2.3.7. Indentations</a></li>
+<li><a href="#_rotation">2.3.8. Rotation</a></li>
+<li><a href="#_text_wrap">2.3.9. Text wrap</a></li>
+<li><a href="#_reusing_styles">2.3.10. Reusing Styles</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#_reading_and_querying_spreadsheets">4. Reading and Querying spreadsheets</a>
+<li><a href="#_reading_and_querying_spreadsheets">3. Reading and Querying spreadsheets</a>
 <ul class="sectlevel2">
-<li><a href="#_data_model">4.1. Data Model</a></li>
-<li><a href="#_sheets_and_rows_2">4.2. Sheets and Rows</a></li>
-<li><a href="#_cells_2">4.3. Cells</a>
+<li><a href="#_data_model">3.1. Data Model</a></li>
+<li><a href="#_sheets_and_rows_2">3.2. Sheets and Rows</a></li>
+<li><a href="#_cells_2">3.3. Cells</a>
 <ul class="sectlevel3">
-<li><a href="#_merged_cells">4.3.1. Merged Cells</a></li>
-<li><a href="#_comments_2">4.3.2. Comments</a></li>
-<li><a href="#_names_2">4.3.3. Names</a></li>
-<li><a href="#_styles_and_fonts">4.3.4. Styles and Fonts</a></li>
+<li><a href="#_merged_cells">3.3.1. Merged Cells</a></li>
+<li><a href="#_comments_2">3.3.2. Comments</a></li>
+<li><a href="#_names_2">3.3.3. Names</a></li>
+<li><a href="#_styles_and_fonts">3.3.4. Styles and Fonts</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#_changelog">5. Changelog</a>
+<li><a href="#_changelog">4. Changelog</a>
 <ul class="sectlevel2">
-<li><a href="#_3_0_0">5.1. 3.0.0</a></li>
-<li><a href="#_2_1_1">5.2. 2.1.1</a></li>
-<li><a href="#_2_1_0">5.3. 2.1.0</a></li>
-<li><a href="#_2_0_0">5.4. 2.0.0</a>
+<li><a href="#_3_0_0">4.1. 3.0.0</a></li>
+<li><a href="#_2_1_1">4.2. 2.1.1</a></li>
+<li><a href="#_2_1_0">4.3. 2.1.0</a></li>
+<li><a href="#_2_0_0">4.4. 2.0.0</a>
 <ul class="sectlevel3">
-<li><a href="#_breaking_changes">5.4.1. Breaking Changes</a></li>
+<li><a href="#_breaking_changes">4.4.1. Breaking Changes</a></li>
 </ul>
 </li>
-<li><a href="#_1_0_5">5.5. 1.0.5</a></li>
-<li><a href="#_1_0_4">5.6. 1.0.4</a></li>
-<li><a href="#_1_0_3">5.7. 1.0.3</a></li>
-<li><a href="#_1_0_2">5.8. 1.0.2</a></li>
-<li><a href="#_1_0_1">5.9. 1.0.1</a></li>
-<li><a href="#_1_0">5.10. 1.0</a>
+<li><a href="#_1_0_5">4.5. 1.0.5</a></li>
+<li><a href="#_1_0_4">4.6. 1.0.4</a></li>
+<li><a href="#_1_0_3">4.7. 1.0.3</a></li>
+<li><a href="#_1_0_2">4.8. 1.0.2</a></li>
+<li><a href="#_1_0_1">4.9. 1.0.1</a></li>
+<li><a href="#_1_0">4.10. 1.0</a>
 <ul class="sectlevel3">
-<li><a href="#_breaking_changes_2">5.10.1. Breaking Changes</a></li>
+<li><a href="#_breaking_changes_2">4.10.1. Breaking Changes</a></li>
 </ul>
 </li>
-<li><a href="#_0_4_0">5.11. 0.4.0</a>
+<li><a href="#_0_4_0">4.11. 0.4.0</a>
 <ul class="sectlevel3">
-<li><a href="#_breaking_changes_3">5.11.1. Breaking Changes</a></li>
+<li><a href="#_breaking_changes_3">4.11.1. Breaking Changes</a></li>
 </ul>
 </li>
-<li><a href="#_0_3_7">5.12. 0.3.7</a></li>
-<li><a href="#_0_3_6">5.13. 0.3.6</a></li>
-<li><a href="#_0_3_5">5.14. 0.3.5</a></li>
-<li><a href="#_0_3_4">5.15. 0.3.4</a></li>
-<li><a href="#_0_3_3">5.16. 0.3.3</a></li>
-<li><a href="#_0_3_2">5.17. 0.3.2</a></li>
-<li><a href="#_0_3_0">5.18. 0.3.0</a>
+<li><a href="#_0_3_7">4.12. 0.3.7</a></li>
+<li><a href="#_0_3_6">4.13. 0.3.6</a></li>
+<li><a href="#_0_3_5">4.14. 0.3.5</a></li>
+<li><a href="#_0_3_4">4.15. 0.3.4</a></li>
+<li><a href="#_0_3_3">4.16. 0.3.3</a></li>
+<li><a href="#_0_3_2">4.17. 0.3.2</a></li>
+<li><a href="#_0_3_0">4.18. 0.3.0</a>
 <ul class="sectlevel3">
-<li><a href="#_breaking_changes_4">5.18.1. Breaking Changes</a></li>
+<li><a href="#_breaking_changes_4">4.18.1. Breaking Changes</a></li>
 </ul>
 </li>
-<li><a href="#_0_2_0">5.19. 0.2.0</a></li>
+<li><a href="#_0_2_0">4.19. 0.2.0</a></li>
 </ul>
 </li>
 </ul>
@@ -246,13 +245,13 @@ repositories {
 
 dependencies {
     // Excel
-    compile 'builders.dsl:spreadsheet-builder-poi:4.0.0'
+    compile 'builders.dsl:spreadsheet-builder-poi:4.0.1'
 
     // or Google Spreadsheet
-    compile 'builders.dsl:spreadsheet-builder-google:4.0.0'
+    compile 'builders.dsl:spreadsheet-builder-google:4.0.1'
 
     // for groovy support
-    compile 'builders.dsl:spreadsheet-builder-groovy:4.0.0'
+    compile 'builders.dsl:spreadsheet-builder-groovy:4.0.1'
 }</code></pre>
 </div>
 </div>
@@ -263,14 +262,14 @@ dependencies {
 &lt;dependency&gt;
   &lt;groupId&gt;builders.dsl&lt;/groupId&gt;
   &lt;artifactId&gt;spreadsheet-builder-poi&lt;/artifactId&gt;
-  &lt;version&gt;4.0.0&lt;/version&gt;
+  &lt;version&gt;4.0.1&lt;/version&gt;
   &lt;type&gt;pom&lt;/type&gt;
 &lt;/dependency&gt;
 &lt;!-- Google Spreadsheet--&gt;
 &lt;dependency&gt;
   &lt;groupId&gt;builders.dsl&lt;/groupId&gt;
   &lt;artifactId&gt;spreadsheet-builder-google&lt;/artifactId&gt;
-  &lt;version&gt;4.0.0&lt;/version&gt;
+  &lt;version&gt;4.0.1&lt;/version&gt;
   &lt;type&gt;pom&lt;/type&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -278,82 +277,7 @@ dependencies {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_rest_api"><a class="anchor" href="#_rest_api"></a>2. REST API</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>New experimental REST API is available at <code><a href="https://api.sheet.rest/v1" class="bare">https://api.sheet.rest/v1</a></code>:</p>
-</div>
-<div class="listingblock primary">
-<div class="title">cURL</div>
-<div class="content">
-<pre class="prettyprint highlight"><code>curl  --request POST \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json" \
-    --header "X-Api-Key: jYXipZWOlU18gqyogkRSG4GgKdymodDY4Hj5BkfO" \
-    --data '{"sheets": [{"name": "Hello Excel","rows": [{"cells": [{"value": "Hello"}]}]}]}' \
-  https://api.sheet.rest/v1/build/excel</code></pre>
-</div>
-</div>
-<div class="listingblock secondary">
-<div class="title">IntelliJ HTTP Client JSON</div>
-<div class="content">
-<pre class="prettyprint highlight"><code>POST https://api.sheet.rest/v1/build/excel
-Content-Type: application/json
-Accept: application/json
-X-Api-Key: jYXipZWOlU18gqyogkRSG4GgKdymodDY4Hj5BkfO
-
-{
-  "sheets": [
-    {
-      "name": "Hello Excel",
-      "rows": [
-        {
-          "cells": [
-            {
-              "value": "Hello"
-            }
-          ]
-        }
-      ]
-    }
-  ]
-}</code></pre>
-</div>
-</div>
-<div class="listingblock secondary">
-<div class="title">IntelliJ HTTP Client YAML</div>
-<div class="content">
-<pre class="prettyprint highlight"><code>POST https://api.sheet.rest/v1/build/excel
-Content-Type: text/vnd.yaml
-Accept: application/json
-X-Api-Key: jYXipZWOlU18gqyogkRSG4GgKdymodDY4Hj5BkfO
-
-sheets:
-- name: Hello Excel
-  rows:
-  - cells:
-    - value: Hello</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Sucessfull response will contain single property URL with the link to the generated file which will be available for download
-within next one hour:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="prettyprint highlight"><code data-lang="json">{
-  "url": "&lt;download url&gt;"
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Feel free to use provided API Key <code>jYXipZWOlU18gqyogkRSG4GgKdymodDY4Hj5BkfO</code> for testing or <a href="mailto:vladimir+sheet.rest@orany.cz?subject=Sheet.REST+API+Key&amp;body=Hello,I+would+like+an+dedicated+access+for+Sheet.REST+because&#8230;&#8203;">ask for a dedicated one</a>.
-Use the JSON and YAML sections of the examples for syntax details. Sheet.REST is currently in public beta.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_writing_spreadsheets"><a class="anchor" href="#_writing_spreadsheets"></a>3. Writing Spreadsheets</h2>
+<h2 id="_writing_spreadsheets"><a class="anchor" href="#_writing_spreadsheets"></a>2. Writing Spreadsheets</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Following example creates the basic spreadsheet with two rows and three columns.</p>
@@ -543,7 +467,7 @@ public class SpreadsheetWriter {
 </table>
 </div>
 <div class="sect2">
-<h3 id="_sheets_and_rows"><a class="anchor" href="#_sheets_and_rows"></a>3.1. Sheets and Rows</h3>
+<h3 id="_sheets_and_rows"><a class="anchor" href="#_sheets_and_rows"></a>2.1. Sheets and Rows</h3>
 <div class="paragraph">
 <p>Each sheet needs to have a name provided. Rows are defined inside the sheets.</p>
 </div>
@@ -624,7 +548,7 @@ To skip a single row, just use <code>row()</code> without any parameters.</p>
 <p><span class="image"><img src="images/specific_row.png" alt="specific row"></span></p>
 </div>
 <div class="sect3">
-<h4 id="_outlines"><a class="anchor" href="#_outlines"></a>3.1.1. Outlines</h4>
+<h4 id="_outlines"><a class="anchor" href="#_outlines"></a>2.1.1. Outlines</h4>
 <div class="paragraph">
 <p>Rows and columns can be optionally grouped into expanded or collapsed groups for better readability.</p>
 </div>
@@ -707,7 +631,7 @@ To skip a single row, just use <code>row()</code> without any parameters.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_freezing_columns_and_rows"><a class="anchor" href="#_freezing_columns_and_rows"></a>3.1.2. Freezing columns and rows</h4>
+<h4 id="_freezing_columns_and_rows"><a class="anchor" href="#_freezing_columns_and_rows"></a>2.1.2. Freezing columns and rows</h4>
 <div class="paragraph">
 <p>You can freeze some rows and or columns to prevent scrolling them.</p>
 </div>
@@ -864,7 +788,7 @@ To skip a single row, just use <code>row()</code> without any parameters.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_protection"><a class="anchor" href="#_protection"></a>3.1.3. Protection</h4>
+<h4 id="_protection"><a class="anchor" href="#_protection"></a>2.1.3. Protection</h4>
 <div class="paragraph">
 <p>You can either lock the sheet or you can protect it with password. Then the users won&#8217;t be able to edit any cells
 or view any formulas. This can emphasize that user changes are not desired.</p>
@@ -950,7 +874,7 @@ w.sheet("Password Protected", s -&gt; {
 </div>
 </div>
 <div class="sect3">
-<h4 id="_visibility"><a class="anchor" href="#_visibility"></a>3.1.4. Visibility</h4>
+<h4 id="_visibility"><a class="anchor" href="#_visibility"></a>2.1.4. Visibility</h4>
 <div class="paragraph">
 <p>You can hide sheet you don&#8217;t want to display to the user. If you use <code>hideCompletely</code> the user will not be able
 to unhide the sheet from the Excel UI.</p>
@@ -1006,7 +930,7 @@ w.sheet("Very hidden", s -&gt;
 </div>
 </div>
 <div class="sect3">
-<h4 id="_automatic_filters"><a class="anchor" href="#_automatic_filters"></a>3.1.5. Automatic Filters</h4>
+<h4 id="_automatic_filters"><a class="anchor" href="#_automatic_filters"></a>2.1.5. Automatic Filters</h4>
 <div class="paragraph">
 <p>You can create an automatic filter for all data in given sheet.</p>
 </div>
@@ -1121,7 +1045,7 @@ w.sheet("Very hidden", s -&gt;
 </div>
 </div>
 <div class="sect3">
-<h4 id="_page_settings"><a class="anchor" href="#_page_settings"></a>3.1.6. Page Settings</h4>
+<h4 id="_page_settings"><a class="anchor" href="#_page_settings"></a>2.1.6. Page Settings</h4>
 <div class="paragraph">
 <p>You can define the paper size, orientation and on how many pages should the sheet be printed within the <code>page</code> closure
 of the sheet.</p>
@@ -1202,7 +1126,7 @@ of the sheet.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_cells"><a class="anchor" href="#_cells"></a>3.2. Cells</h3>
+<h3 id="_cells"><a class="anchor" href="#_cells"></a>2.2. Cells</h3>
 <div class="paragraph">
 <p>Cells are defined within rows. The simples example to create a cell is providing its value as a method call argument.
 Additionally you can customize more details when you pass a closure with the cell definition. Then you can either
@@ -1314,7 +1238,7 @@ call the <code>cell</code> method without any parameters.</p>
 <p><span class="image"><img src="images/basic_cells.png" alt="basic cells"></span></p>
 </div>
 <div class="sect3">
-<h4 id="_type_handling"><a class="anchor" href="#_type_handling"></a>3.2.1. Type handling</h4>
+<h4 id="_type_handling"><a class="anchor" href="#_type_handling"></a>2.2.1. Type handling</h4>
 <div class="paragraph">
 <p>Any cell values which are not instances of <code>Number</code>, <code>Boolean</code>, <code>Date</code> or <code>Calendar</code> are handled as <code>String</code> using a <code>toString()</code>
 method. For any instance of <code>Number</code>, <code>Date</code> or <code>Calendar</code> the type of cell is set to <code>NUMERIC</code>.
@@ -1336,7 +1260,7 @@ For <code>Boolean</code> the type of the cell is set automatically to <code>BOOL
 </div>
 </div>
 <div class="sect3">
-<h4 id="_merging_cells"><a class="anchor" href="#_merging_cells"></a>3.2.2. Merging cells</h4>
+<h4 id="_merging_cells"><a class="anchor" href="#_merging_cells"></a>2.2.2. Merging cells</h4>
 <div class="paragraph">
 <p>You can set <code>rowspan</code> and/or <code>colspan</code> of any cell to merge multiple cells together.</p>
 </div>
@@ -1470,7 +1394,7 @@ For <code>Boolean</code> the type of the cell is set automatically to <code>BOOL
 </div>
 </div>
 <div class="sect3">
-<h4 id="_images"><a class="anchor" href="#_images"></a>3.2.3. Images</h4>
+<h4 id="_images"><a class="anchor" href="#_images"></a>2.2.3. Images</h4>
 <div class="paragraph">
 <p>You can insert an image calling one of <code>png</code>, <code>jpeg</code>, <code>emf</code>, <code>wmf</code>, <code>pict</code>, <code>dib</code> method inside the cell definition.</p>
 </div>
@@ -1554,7 +1478,7 @@ a file path otherwise. For advanced usage it can be also byte array or any <code
 </div>
 </div>
 <div class="sect3">
-<h4 id="_comments"><a class="anchor" href="#_comments"></a>3.2.4. Comments</h4>
+<h4 id="_comments"><a class="anchor" href="#_comments"></a>2.2.4. Comments</h4>
 <div class="paragraph">
 <p>You can set comment of any cell using the <code>comment</code> method. Use the variant accepting closure If you want to specify
 the author of the comment as well. The author only appears in the status bar of the application.</p>
@@ -1663,7 +1587,7 @@ the author of the comment as well. The author only appears in the status bar of 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_names"><a class="anchor" href="#_names"></a>3.2.5. Names</h4>
+<h4 id="_names"><a class="anchor" href="#_names"></a>2.2.5. Names</h4>
 <div class="paragraph">
 <p>Naming cells helps you to refer them with links or you can use them to expand the formula definitions. To declare name
 of the cell simply call the <code>name</code> method inside the cell definition. See <a href="#_links">Links</a>
@@ -1788,7 +1712,7 @@ to the particular cell.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_links"><a class="anchor" href="#_links"></a>3.2.6. Links</h4>
+<h4 id="_links"><a class="anchor" href="#_links"></a>2.2.6. Links</h4>
 <div class="paragraph">
 <p>You can create for types of links</p>
 </div>
@@ -1999,7 +1923,7 @@ w.sheet("Links", s -&gt; {
 </div>
 </div>
 <div class="sect3">
-<h4 id="_dimensions"><a class="anchor" href="#_dimensions"></a>3.2.7. Dimensions</h4>
+<h4 id="_dimensions"><a class="anchor" href="#_dimensions"></a>2.2.7. Dimensions</h4>
 <div class="paragraph">
 <p>You can set the width of the cells as the multiple of standard character width, centimeters or inches.
 You can also set the column to accommodate the width automatically using the <code>auto</code> keyword but it may slow down the generation. The width is defined inside cells
@@ -2140,7 +2064,7 @@ You can also set the column to accommodate the width automatically using the <co
 </div>
 </div>
 <div class="sect2">
-<h3 id="_styles"><a class="anchor" href="#_styles"></a>3.3. Styles</h3>
+<h3 id="_styles"><a class="anchor" href="#_styles"></a>2.3. Styles</h3>
 <div class="paragraph">
 <p>Cell styles are defined either for a whole row or a particular cell. You can define a named style on the top level along
 with sheets and than refer to it from cell or row.</p>
@@ -2344,7 +2268,7 @@ sheets:
 <p><span class="image"><img src="images/styles.png" alt="styles"></span></p>
 </div>
 <div class="sect3">
-<h4 id="_alignments"><a class="anchor" href="#_alignments"></a>3.3.1. Alignments</h4>
+<h4 id="_alignments"><a class="anchor" href="#_alignments"></a>2.3.1. Alignments</h4>
 <div class="paragraph">
 <p>Use <code>align</code> method to align the cells horizontally or vertically. You place the vertical alignment first and then
 the horizontal. Use default value <code>bottom</code> if you dont want to change the vertical alignment but you want to change
@@ -2515,7 +2439,7 @@ full description of vertical alignment options.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_fills"><a class="anchor" href="#_fills"></a>3.3.2. Fills</h4>
+<h4 id="_fills"><a class="anchor" href="#_fills"></a>2.3.2. Fills</h4>
 <div class="paragraph">
 <p>You can set the background color or combination of foreground color, background color and fill to customize cells'
 appearance. Color can be set as hexadecimal string starting with <code>#</code> or you can use one of predefined colors
@@ -2599,7 +2523,7 @@ which are exactly the same as HTML predefined colors.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_borders"><a class="anchor" href="#_borders"></a>3.3.3. Borders</h4>
+<h4 id="_borders"><a class="anchor" href="#_borders"></a>2.3.3. Borders</h4>
 <div class="paragraph">
 <p>You can define a color and style of the cell border. To address which color to change, use <code>top</code>, <code>bottom</code>, <code>left</code>
 and/or <code>right</code> keywords when calling the <code>border</code> method. See <a href="#_available_predefined_colors">Available predefined colors</a>.
@@ -2687,7 +2611,7 @@ Colors can be defined as hexadecimal string as well.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_fonts"><a class="anchor" href="#_fonts"></a>3.3.4. Fonts</h4>
+<h4 id="_fonts"><a class="anchor" href="#_fonts"></a>2.3.4. Fonts</h4>
 <div class="paragraph">
 <p>You can customize the font size, name and color of the text in the cell. You also can make it <code>bold</code>, <code>italic</code>, <code>underline</code> or
 <code>strikeout</code>. See <a href="#_available_predefined_colors">Available predefined colors</a>.</p>
@@ -2889,7 +2813,7 @@ Colors can be defined as hexadecimal string as well.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rich_texts"><a class="anchor" href="#_rich_texts"></a>3.3.5. Rich Texts</h4>
+<h4 id="_rich_texts"><a class="anchor" href="#_rich_texts"></a>2.3.5. Rich Texts</h4>
 <div class="paragraph">
 <p>Apart from setting the font for the whole cell you can create a rich text cell content as well. Instead of <code>value</code>
 use multiple calls to <code>text</code> method which takes optional closure to define the font for the current text run. The font
@@ -3040,7 +2964,7 @@ you are using at least version 3.13.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_data_formats"><a class="anchor" href="#_data_formats"></a>3.3.6. Data formats</h4>
+<h4 id="_data_formats"><a class="anchor" href="#_data_formats"></a>2.3.6. Data formats</h4>
 <div class="paragraph">
 <p>You can assign a data format using the <code>format</code> method. Detailed guide how the format works can be found in
 <a href="https://support.microsoft.com/en-us/help/264372/how-to-control-and-understand-settings-in-the-format-cells-dialog-box-in-excel">How to control and understand settings in the Excel for Format Cells
@@ -3274,7 +3198,7 @@ The excerpt from the official documentation follows:</em></p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_indentations"><a class="anchor" href="#_indentations"></a>3.3.7. Indentations</h4>
+<h4 id="_indentations"><a class="anchor" href="#_indentations"></a>2.3.7. Indentations</h4>
 <div class="paragraph">
 <p>You can set the indentation in number of characters from the beginning of the cell.</p>
 </div>
@@ -3454,7 +3378,7 @@ The excerpt from the official documentation follows:</em></p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_rotation"><a class="anchor" href="#_rotation"></a>3.3.8. Rotation</h4>
+<h4 id="_rotation"><a class="anchor" href="#_rotation"></a>2.3.8. Rotation</h4>
 <div class="paragraph">
 <p>You can rotate the text in the cell using the <code>rotation</code> method. It accepts number from <code>0</code> to <code>180</code>.
 Numbers lower from <code>1</code> to <code>90</code> will produces text going <em>uphill</em> and from <code>91</code> to <code>180</code> text going <em>downhill</em></p>
@@ -3630,7 +3554,7 @@ Numbers lower from <code>1</code> to <code>90</code> will produces text going <e
 </div>
 </div>
 <div class="sect3">
-<h4 id="_text_wrap"><a class="anchor" href="#_text_wrap"></a>3.3.9. Text wrap</h4>
+<h4 id="_text_wrap"><a class="anchor" href="#_text_wrap"></a>2.3.9. Text wrap</h4>
 <div class="paragraph">
 <p>By default the text is not wrapped. This mean that the new lines characters present in the string are ignored.
 You can update this by writing <code>wrap text</code> line in the style definition closure.</p>
@@ -3751,7 +3675,7 @@ You can update this by writing <code>wrap text</code> line in the style definiti
 </div>
 </div>
 <div class="sect3">
-<h4 id="_reusing_styles"><a class="anchor" href="#_reusing_styles"></a>3.3.10. Reusing Styles</h4>
+<h4 id="_reusing_styles"><a class="anchor" href="#_reusing_styles"></a>2.3.10. Reusing Styles</h4>
 <div class="paragraph">
 <p>You can externalize your styles configuration into class implementing <code>builders.dsl.spreadsheet.builder.api.Stylesheet</code>
 interface to maximize code reuse or report customization.</p>
@@ -3864,7 +3788,7 @@ builder.build(out, w -&gt; {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_reading_and_querying_spreadsheets"><a class="anchor" href="#_reading_and_querying_spreadsheets"></a>4. Reading and Querying spreadsheets</h2>
+<h2 id="_reading_and_querying_spreadsheets"><a class="anchor" href="#_reading_and_querying_spreadsheets"></a>3. Reading and Querying spreadsheets</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>You can query the spreadsheet with similar syntax as you build it.</p>
@@ -3982,7 +3906,7 @@ public class CriteriaDemo {
 <code>all()</code>, <code>find()</code> and <code>exists()</code> to return every cell, find single cell or just test for cell presence.</p>
 </div>
 <div class="sect2">
-<h3 id="_data_model"><a class="anchor" href="#_data_model"></a>4.1. Data Model</h3>
+<h3 id="_data_model"><a class="anchor" href="#_data_model"></a>3.1. Data Model</h3>
 <div class="paragraph">
 <p>The <code>Cell</code> objects provides getters counterparts to methods supported by query such as <code>getName()</code>. You can also
 easily navigate into all eight directions with methods like <code>getLeft()</code>, <code>getAboveLeft()</code> etc.  or access the whole
@@ -4024,7 +3948,7 @@ assert a.row.below.cells.first().value == a.below.value</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_sheets_and_rows_2"><a class="anchor" href="#_sheets_and_rows_2"></a>4.2. Sheets and Rows</h3>
+<h3 id="_sheets_and_rows_2"><a class="anchor" href="#_sheets_and_rows_2"></a>3.2. Sheets and Rows</h3>
 <div class="paragraph">
 <p>You can query only specific sheet or row</p>
 </div>
@@ -4258,7 +4182,7 @@ assertEquals(1, dataRow.get("One"));</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_cells_2"><a class="anchor" href="#_cells_2"></a>4.3. Cells</h3>
+<h3 id="_cells_2"><a class="anchor" href="#_cells_2"></a>3.3. Cells</h3>
 <div class="paragraph">
 <p>You can easily specify which cells you want to return from the query. For example by specifying desired value.
 You can also query for more specific type with <code>date</code>, <code>number</code>, <code>string</code>, <code>bool</code> methods.</p>
@@ -4325,7 +4249,7 @@ You can also query for more specific type with <code>date</code>, <code>number</
 <p><em>Result:</em> Every cell from column 'B' of any sheet and row</p>
 </div>
 <div class="sect3">
-<h4 id="_merged_cells"><a class="anchor" href="#_merged_cells"></a>4.3.1. Merged Cells</h4>
+<h4 id="_merged_cells"><a class="anchor" href="#_merged_cells"></a>3.3.1. Merged Cells</h4>
 <div class="paragraph">
 <p>You can query for merged cells only.</p>
 </div>
@@ -4364,7 +4288,7 @@ You can also query for more specific type with <code>date</code>, <code>number</
 </div>
 </div>
 <div class="sect3">
-<h4 id="_comments_2"><a class="anchor" href="#_comments_2"></a>4.3.2. Comments</h4>
+<h4 id="_comments_2"><a class="anchor" href="#_comments_2"></a>3.3.2. Comments</h4>
 <div class="paragraph">
 <p>You can query for cells with given comment.</p>
 </div>
@@ -4432,7 +4356,7 @@ You can also query for more specific type with <code>date</code>, <code>number</
 </div>
 </div>
 <div class="sect3">
-<h4 id="_names_2"><a class="anchor" href="#_names_2"></a>4.3.3. Names</h4>
+<h4 id="_names_2"><a class="anchor" href="#_names_2"></a>3.3.3. Names</h4>
 <div class="paragraph">
 <p>You can query for specific named cell.</p>
 </div>
@@ -4483,7 +4407,7 @@ You can also query for more specific type with <code>date</code>, <code>number</
 </div>
 </div>
 <div class="sect3">
-<h4 id="_styles_and_fonts"><a class="anchor" href="#_styles_and_fonts"></a>4.3.4. Styles and Fonts</h4>
+<h4 id="_styles_and_fonts"><a class="anchor" href="#_styles_and_fonts"></a>3.3.4. Styles and Fonts</h4>
 <div class="paragraph">
 <p>You can query cells by style parameters such as foreground color or font height. All the options from the style builder is currently supported
 except text wrapping, rich texts and alignment options. All font options are supported. See the guide above for reference.</p>
@@ -4550,33 +4474,33 @@ except text wrapping, rich texts and alignment options. All font options are sup
 </div>
 </div>
 <div class="sect1">
-<h2 id="_changelog"><a class="anchor" href="#_changelog"></a>5. Changelog</h2>
+<h2 id="_changelog"><a class="anchor" href="#_changelog"></a>4. Changelog</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_3_0_0"><a class="anchor" href="#_3_0_0"></a>5.1. 3.0.0</h3>
+<h3 id="_3_0_0"><a class="anchor" href="#_3_0_0"></a>4.1. 3.0.0</h3>
 <div class="paragraph">
 <p>Upgraded to the latest Apache POI 5.x</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_2_1_1"><a class="anchor" href="#_2_1_1"></a>5.2. 2.1.1</h3>
+<h3 id="_2_1_1"><a class="anchor" href="#_2_1_1"></a>4.2. 2.1.1</h3>
 <div class="paragraph">
 <p>Allowing adding groups for just single row or column</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_2_1_0"><a class="anchor" href="#_2_1_0"></a>5.3. 2.1.0</h3>
+<h3 id="_2_1_0"><a class="anchor" href="#_2_1_0"></a>4.3. 2.1.0</h3>
 <div class="paragraph">
 <p>Added support for streaming POI API.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_2_0_0"><a class="anchor" href="#_2_0_0"></a>5.4. 2.0.0</h3>
+<h3 id="_2_0_0"><a class="anchor" href="#_2_0_0"></a>4.4. 2.0.0</h3>
 <div class="paragraph">
 <p>Added indirect support for Google Spreadsheet (<a href="https://github.com/dsl-builders/spreadsheet/blob/master/spreadsheet-builder-google/src/test/groovy/builders/dsl/spreadsheet/google/GoogleBuilderSpec.groovy">see <code>GoogleBuilderSpec</code> for example</a>)</p>
 </div>
 <div class="sect3">
-<h4 id="_breaking_changes"><a class="anchor" href="#_breaking_changes"></a>5.4.1. Breaking Changes</h4>
+<h4 id="_breaking_changes"><a class="anchor" href="#_breaking_changes"></a>4.4.1. Breaking Changes</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4593,31 +4517,31 @@ except text wrapping, rich texts and alignment options. All font options are sup
 </div>
 </div>
 <div class="sect2">
-<h3 id="_1_0_5"><a class="anchor" href="#_1_0_5"></a>5.5. 1.0.5</h3>
+<h3 id="_1_0_5"><a class="anchor" href="#_1_0_5"></a>4.5. 1.0.5</h3>
 <div class="paragraph">
 <p>Fixed problem with fetching cells <code>above</code> or <code>below</code> when cell list in the row.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_1_0_4"><a class="anchor" href="#_1_0_4"></a>5.6. 1.0.4</h3>
+<h3 id="_1_0_4"><a class="anchor" href="#_1_0_4"></a>4.6. 1.0.4</h3>
 <div class="paragraph">
 <p>Fixed problem with fetching cells <code>above</code> or <code>below</code> when cell list in the row is not initialized yet.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_1_0_3"><a class="anchor" href="#_1_0_3"></a>5.7. 1.0.3</h3>
+<h3 id="_1_0_3"><a class="anchor" href="#_1_0_3"></a>4.7. 1.0.3</h3>
 <div class="paragraph">
 <p>Fixed problem with automatic width of column with long text and automatic filter <a href="https://github.com/dsl-builders/spreadsheet/issues/2">#5</a></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_1_0_2"><a class="anchor" href="#_1_0_2"></a>5.8. 1.0.2</h3>
+<h3 id="_1_0_2"><a class="anchor" href="#_1_0_2"></a>4.8. 1.0.2</h3>
 <div class="paragraph">
 <p>Fixed problem with automatic column widths when automatic filter is enabled <a href="https://github.com/dsl-builders/spreadsheet/issues/2">#2</a></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_1_0_1"><a class="anchor" href="#_1_0_1"></a>5.9. 1.0.1</h3>
+<h3 id="_1_0_1"><a class="anchor" href="#_1_0_1"></a>4.9. 1.0.1</h3>
 <div class="paragraph">
 <p>Better support in IntelliJ IDEA.</p>
 </div>
@@ -4626,7 +4550,7 @@ except text wrapping, rich texts and alignment options. All font options are sup
 </div>
 </div>
 <div class="sect2">
-<h3 id="_1_0"><a class="anchor" href="#_1_0"></a>5.10. 1.0</h3>
+<h3 id="_1_0"><a class="anchor" href="#_1_0"></a>4.10. 1.0</h3>
 <div class="paragraph">
 <p>Java-only API which can be used with Java 8.</p>
 </div>
@@ -4637,7 +4561,7 @@ except text wrapping, rich texts and alignment options. All font options are sup
 <p>Added ability to hide sheets <a href="https://github.com/MetadataConsulting/spreadsheet-builder/issues/19">#19</a>.</p>
 </div>
 <div class="sect3">
-<h4 id="_breaking_changes_2"><a class="anchor" href="#_breaking_changes_2"></a>5.10.1. Breaking Changes</h4>
+<h4 id="_breaking_changes_2"><a class="anchor" href="#_breaking_changes_2"></a>4.10.1. Breaking Changes</h4>
 <div class="paragraph">
 <p>Package migration from <code>org.modelcatalogue.spreadsheet</code> to <code>builders.dsl.spreadsheet</code>.</p>
 </div>
@@ -4675,12 +4599,12 @@ to create file-free implementation such as Google Sheets in future.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_0_4_0"><a class="anchor" href="#_0_4_0"></a>5.11. 0.4.0</h3>
+<h3 id="_0_4_0"><a class="anchor" href="#_0_4_0"></a>4.11. 0.4.0</h3>
 <div class="paragraph">
 <p>Ability to also retrieve sheet or rows from the criteria query.</p>
 </div>
 <div class="sect3">
-<h4 id="_breaking_changes_3"><a class="anchor" href="#_breaking_changes_3"></a>5.11.1. Breaking Changes</h4>
+<h4 id="_breaking_changes_3"><a class="anchor" href="#_breaking_changes_3"></a>4.11.1. Breaking Changes</h4>
 <div class="paragraph">
 <p>Criteria methods <code>query</code> and <code>all</code> no longer returns collections of cells but object of type <code>SpreadsheetCriteriaResult</code>.
 This object itself implements at least <code>Iterable&lt;Cell&gt;</code> interface allowing to use the results directly in the for loops
@@ -4690,46 +4614,46 @@ and <code>Collection&lt;Sheet&gt;</code> can be accessed using the result object
 </div>
 </div>
 <div class="sect2">
-<h3 id="_0_3_7"><a class="anchor" href="#_0_3_7"></a>5.12. 0.3.7</h3>
+<h3 id="_0_3_7"><a class="anchor" href="#_0_3_7"></a>4.12. 0.3.7</h3>
 <div class="paragraph">
 <p>Simple page settings, ability to set cells' width and height in centimeters or inches and fixed merging row and cell styles.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_0_3_6"><a class="anchor" href="#_0_3_6"></a>5.13. 0.3.6</h3>
+<h3 id="_0_3_6"><a class="anchor" href="#_0_3_6"></a>4.13. 0.3.6</h3>
 <div class="paragraph">
 <p>Minor improvement in combination of the styles.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_0_3_5"><a class="anchor" href="#_0_3_5"></a>5.14. 0.3.5</h3>
+<h3 id="_0_3_5"><a class="anchor" href="#_0_3_5"></a>4.14. 0.3.5</h3>
 <div class="paragraph">
 <p>Added ability to defined named styles for whole row and particular cell as well and fixed problem with
 merged cells formatting.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_0_3_4"><a class="anchor" href="#_0_3_4"></a>5.15. 0.3.4</h3>
+<h3 id="_0_3_4"><a class="anchor" href="#_0_3_4"></a>4.15. 0.3.4</h3>
 <div class="paragraph">
 <p>Added automatic filtering and allowed casting the api objects to their POI equivalents.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_0_3_3"><a class="anchor" href="#_0_3_3"></a>5.16. 0.3.3</h3>
+<h3 id="_0_3_3"><a class="anchor" href="#_0_3_3"></a>4.16. 0.3.3</h3>
 <div class="paragraph">
 <p>Fixed cells with value <code>0</code> rendered as empty cell.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_0_3_2"><a class="anchor" href="#_0_3_2"></a>5.17. 0.3.2</h3>
+<h3 id="_0_3_2"><a class="anchor" href="#_0_3_2"></a>4.17. 0.3.2</h3>
 <div class="paragraph">
 <p>Ability to use existing spreadsheet as a template in builder&#8217;s <code>build</code> method.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_0_3_0"><a class="anchor" href="#_0_3_0"></a>5.18. 0.3.0</h3>
+<h3 id="_0_3_0"><a class="anchor" href="#_0_3_0"></a>4.18. 0.3.0</h3>
 <div class="sect3">
-<h4 id="_breaking_changes_4"><a class="anchor" href="#_breaking_changes_4"></a>5.18.1. Breaking Changes</h4>
+<h4 id="_breaking_changes_4"><a class="anchor" href="#_breaking_changes_4"></a>4.18.1. Breaking Changes</h4>
 <div class="paragraph">
 <p>No more single word mutating DSL statements such as <code>locked</code> or <code>bold</code> as they conflicts with newly introduced getters.
 Keywords which are already getters such as <code>black</code> for color of same name remain unaffected.</p>
@@ -4758,7 +4682,7 @@ to distinguish them from the ones returned from queries.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_0_2_0"><a class="anchor" href="#_0_2_0"></a>5.19. 0.2.0</h3>
+<h3 id="_0_2_0"><a class="anchor" href="#_0_2_0"></a>4.19. 0.2.0</h3>
 <div class="paragraph">
 <p>Introduced getters for parent such as <code>workbook</code> for <code>sheet</code> etc.</p>
 </div>
@@ -4768,8 +4692,8 @@ to distinguish them from the ones returned from queries.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 4.0.0<br>
-Last updated 2026-06-10 12:20:11 UTC
+Version 4.0.1<br>
+Last updated 2026-06-10 13:02:36 UTC
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
