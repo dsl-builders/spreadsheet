@@ -169,9 +169,30 @@ subprojects { subproject ->
                 developerConnection = "scm:git:ssh://git@github.com/${slug}.git"
             }
         }
+    }
 
+    afterEvaluate {
         if (rootProject.config.release) {
-            signAllPublications()
+            apply plugin: 'signing'
+
+            signing {
+                String signingKey = findProperty('signingInMemoryKey')
+                if (signingKey) {
+                    useInMemoryPgpKeys(
+                        signingKey,
+                        (findProperty('signingInMemoryKeyPassword') ?: '') as String
+                    )
+                }
+
+                sign publishing.publications
+                required = true
+            }
+
+            tasks.withType(org.gradle.plugins.signing.Sign).configureEach {
+                required = true
+                signatory = signing.signatory
+                setOnlyIf { true }
+            }
         }
     }
 

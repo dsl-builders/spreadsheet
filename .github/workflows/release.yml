@@ -4,6 +4,11 @@ on:
   push:
     tags:
       - '*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version to publish, for example 4.0.0
+        required: true
 jobs:
   release:
     name: Release
@@ -32,11 +37,11 @@ jobs:
           } >> "$GITHUB_ENV"
       - name: Semantic Version
         id: version
+        if: github.event_name == 'push'
         uses: ncipollo/semantic-version-action@v1
       - name: Publish
         env:
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.CENTRAL_TOKEN_USERNAME || secrets.SONATYPE_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.CENTRAL_TOKEN_PASSWORD || secrets.SONATYPE_PASSWORD }}
-          ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.SIGNING_KEY_ID }}
           ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD }}
-        run: ./gradlew gitPublishPush publishAndReleaseToMavenCentral -Pversion=${{ steps.version.outputs.tag }} -Prelease=true -Dorg.ajoberstar.grgit.auth.username=${{ secrets.GH_PAGES_TOKEN }} --stacktrace
+        run: ./gradlew gitPublishPush publishAndReleaseToMavenCentral -Pversion=${{ github.event_name == 'workflow_dispatch' && inputs.version || steps.version.outputs.tag }} -Prelease=true -Dorg.ajoberstar.grgit.auth.username=${{ secrets.GH_PAGES_TOKEN }} --stacktrace
