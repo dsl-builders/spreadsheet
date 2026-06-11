@@ -53,7 +53,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.Consumer;
 
-@SuppressWarnings({"java:S106", "java:S3776"})
+@SuppressWarnings({"java:S106", "java:S1192", "java:S3776"})
 public final class SpreadsheetCli {
 
     private static final String SHEET = "sheet";
