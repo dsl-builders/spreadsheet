@@ -56,6 +56,13 @@ import java.util.function.Consumer;
 @SuppressWarnings({"java:S106", "java:S3776"})
 public final class SpreadsheetCli {
 
+    private static final String SHEET = "sheet";
+    private static final String SHEETS = "sheets";
+    private static final String ROW = "row";
+    private static final String NUMBER = "number";
+    private static final String COLUMN = "column";
+    private static final String VALUE = "value";
+
     private SpreadsheetCli() {
         // utility class
     }
@@ -122,7 +129,7 @@ public final class SpreadsheetCli {
     }
 
     private static void applyWorkbook(WorkbookCriterion workbook, Map<String, Object> spec) {
-        for (Object sheetValue : list(spec.get("sheets"))) {
+        for (Object sheetValue : list(spec.get(SHEETS))) {
             Map<String, Object> sheet = map(sheetValue);
             if (sheet.containsKey("name")) {
                 workbook.sheet(string(sheet.get("name")), criterion -> applySheet(criterion, sheet));
@@ -133,8 +140,8 @@ public final class SpreadsheetCli {
         for (Object alternative : list(spec.get("or"))) {
             workbook.or((Consumer<WorkbookCriterion>) criterion -> applyWorkbook(criterion, map(alternative)));
         }
-        if (!spec.containsKey("sheets") && spec.containsKey("sheet")) {
-            workbook.sheet(string(spec.get("sheet")), criterion -> applySheet(criterion, spec));
+        if (!spec.containsKey(SHEETS) && spec.containsKey(SHEET)) {
+            workbook.sheet(string(spec.get(SHEET)), criterion -> applySheet(criterion, spec));
         }
     }
 
@@ -168,10 +175,10 @@ public final class SpreadsheetCli {
         if (spec.containsKey("from") && spec.containsKey("to")) {
             sheet.row(integer(spec.get("from")), integer(spec.get("to")));
             sheet.row(row -> applyRow(row, spec));
-        } else if (spec.containsKey("number")) {
-            sheet.row(integer(spec.get("number")), row -> applyRow(row, spec));
-        } else if (spec.containsKey("row")) {
-            sheet.row(integer(spec.get("row")), row -> applyRow(row, spec));
+        } else if (spec.containsKey(NUMBER)) {
+            sheet.row(integer(spec.get(NUMBER)), row -> applyRow(row, spec));
+        } else if (spec.containsKey(ROW)) {
+            sheet.row(integer(spec.get(ROW)), row -> applyRow(row, spec));
         } else {
             sheet.row(row -> applyRow(row, spec));
         }
@@ -195,8 +202,8 @@ public final class SpreadsheetCli {
             } else {
                 row.cell(string(from), string(to), cell -> applyCell(cell, spec));
             }
-        } else if (spec.containsKey("column")) {
-            Object column = spec.get("column");
+        } else if (spec.containsKey(COLUMN)) {
+            Object column = spec.get(COLUMN);
             if (column instanceof Number) {
                 row.cell(integer(column), cell -> applyCell(cell, spec));
             } else {
@@ -208,8 +215,8 @@ public final class SpreadsheetCli {
     }
 
     private static void applyCell(CellCriterion cell, Map<String, Object> spec) {
-        if (spec.containsKey("value")) {
-            cell.value(spec.get("value"));
+        if (spec.containsKey(VALUE)) {
+            cell.value(spec.get(VALUE));
         }
         if (spec.containsKey("string")) {
             cell.string(string(spec.get("string")));
@@ -286,18 +293,18 @@ public final class SpreadsheetCli {
 
     private static Map<String, Object> rowMap(Row row) {
         Map<String, Object> map = new LinkedHashMap<>();
-        map.put("sheet", row.getSheet().getName());
-        map.put("row", row.getNumber());
+        map.put(SHEET, row.getSheet().getName());
+        map.put(ROW, row.getNumber());
         map.put("values", row.getCells().stream().map(Cell::getValue).toList());
         return map;
     }
 
     private static Map<String, Object> cellMap(Cell cell) {
         Map<String, Object> map = new LinkedHashMap<>();
-        map.put("sheet", cell.getRow().getSheet().getName());
-        map.put("row", cell.getRow().getNumber());
-        map.put("column", cell.getColumnAsString());
-        map.put("value", cell.getValue());
+        map.put(SHEET, cell.getRow().getSheet().getName());
+        map.put(ROW, cell.getRow().getNumber());
+        map.put(COLUMN, cell.getColumnAsString());
+        map.put(VALUE, cell.getValue());
         return map;
     }
 
