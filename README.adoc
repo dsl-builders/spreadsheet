@@ -7,5 +7,27 @@ Google Sheets are also supported indirectly (native Excel <=> Google conversion)
 
 See the link:http://spreadsheet.dsl.builders/[Full Documentation]
 
+== Command Line
+
+The `spreadsheet-builder-cli` project provides a small command line wrapper around
+`spreadsheet-builder-data` and `spreadsheet-builder-poi`.
+
+Create an Excel workbook from JSON/YAML data:
+
+[source,bash]
+----
+spreadsheet-builder-cli create people.yml people.xlsx
+----
+
+Query an Excel workbook with JSON/YAML criteria:
+
+[source,bash]
+----
+spreadsheet-builder-cli query people.xlsx query.yml
+----
+
+A query currently supports `sheet`, `where.column`, and optional
+`where.equals` or `where.contains`, returning matching rows as JSON.
+
 == Acknowledgement
 This project is inspired by http://www.craigburke.com/document-builder/[Groovy Document Builder]
