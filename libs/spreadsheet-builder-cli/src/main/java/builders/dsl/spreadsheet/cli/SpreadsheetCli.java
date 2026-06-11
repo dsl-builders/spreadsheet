@@ -221,8 +221,8 @@ public final class SpreadsheetCli {
         if (spec.containsKey("string")) {
             cell.string(string(spec.get("string")));
         }
-        if (spec.containsKey("number")) {
-            cell.number(decimal(spec.get("number")));
+        if (spec.containsKey(NUMBER)) {
+            cell.number(decimal(spec.get(NUMBER)));
         }
         if (spec.containsKey("bool")) {
             cell.bool(Boolean.valueOf(string(spec.get("bool"))));
@@ -279,7 +279,7 @@ public final class SpreadsheetCli {
 
     private static Map<String, Object> resultMap(SpreadsheetCriteriaResult result) {
         Map<String, Object> output = new LinkedHashMap<>();
-        output.put("sheets", result.getSheets().stream().map(SpreadsheetCli::sheetMap).toList());
+        output.put(SHEETS, result.getSheets().stream().map(SpreadsheetCli::sheetMap).toList());
         output.put("rows", result.getRows().stream().map(SpreadsheetCli::rowMap).toList());
         output.put("cells", result.getCells().stream().map(SpreadsheetCli::cellMap).toList());
         return output;
