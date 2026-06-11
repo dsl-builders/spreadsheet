@@ -42,17 +42,18 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
+@SuppressWarnings("java:S106")
 public final class SpreadsheetCli {
 
     private SpreadsheetCli() {
         // utility class
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
         run(args);
     }
 
-    static void run(String[] args) throws Exception {
+    static void run(String[] args) throws IOException {
         if (args.length == 0 || "--help".equals(args[0]) || "-h".equals(args[0])) {
             printHelp();
             return;
