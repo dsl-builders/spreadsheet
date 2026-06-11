@@ -86,15 +86,19 @@ sheets:
         }.cell
     }
 
-    void 'queries an Excel workbook using YAML query criteria'() {
+    void 'queries an Excel workbook using serialized YAML criteria'() {
         given:
         File workbook = workbook()
         File query = new File(temporaryDirectory, 'query.yml')
         query.text = '''\
-sheet: People
-where:
-  column: C
-  equals: Prague
+sheets:
+- name: People
+  rows:
+  - from: 2
+    to: 4
+    cells:
+    - column: C
+      value: Prague
 '''
 
         when:
@@ -104,21 +108,32 @@ where:
         Map result = new ObjectMapper().readValue(output, Map)
 
         then:
-        result.matches*.row == [2, 4]
-        result.matches[0].values == ['Alice', 30.0, 'Prague']
+        result.cells*.row == [2, 4]
+        result.cells*.column == ['C', 'C']
+        result.cells*.value == ['Prague', 'Prague']
+        result.rows[0].values == ['Alice', 30.0, 'Prague']
     }
 
-    void 'queries an Excel workbook using JSON query criteria'() {
+    void 'queries an Excel workbook using serialized JSON criteria'() {
         given:
         File workbook = workbook()
         File query = new File(temporaryDirectory, 'query.json')
         query.text = '''\
 {
-  "sheet": "People",
-  "where": {
-    "column": "A",
-    "contains": "bo"
-  }
+  "sheets": [
+    {
+      "name": "People",
+      "rows": [
+        {"cells": [{"column": "A", "string": "Bob"}]}
+      ]
+    },
+    {
+      "name": "People",
+      "rows": [
+        {"cells": [{"column": "A", "string": "Carol"}]}
+      ]
+    }
+  ]
 }
 '''
 
@@ -129,8 +144,8 @@ where:
         Map result = new ObjectMapper().readValue(output, Map)
 
         then:
-        result.matches*.row == [3]
-        result.matches[0].values == ['Bob', 41.0, 'Brno']
+        result.cells*.value == ['Bob', 'Carol']
+        result.rows*.row == [3, 4]
     }
 
     private static String captureStandardOutput(Closure<?> action) {

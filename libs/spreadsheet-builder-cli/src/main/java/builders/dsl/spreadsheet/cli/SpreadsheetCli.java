@@ -18,13 +18,21 @@
 package builders.dsl.spreadsheet.cli;
 
 import builders.dsl.spreadsheet.api.Cell;
+import builders.dsl.spreadsheet.api.ForegroundFill;
+import builders.dsl.spreadsheet.api.Keywords;
 import builders.dsl.spreadsheet.api.Row;
+import builders.dsl.spreadsheet.api.Sheet;
 import builders.dsl.spreadsheet.builder.api.SpreadsheetBuilder;
 import builders.dsl.spreadsheet.builder.poi.PoiSpreadsheetBuilder;
 import builders.dsl.spreadsheet.parser.data.json.JsonSpreadsheetParser;
 import builders.dsl.spreadsheet.parser.data.yml.YmlSpreadsheetParser;
+import builders.dsl.spreadsheet.query.api.CellCriterion;
+import builders.dsl.spreadsheet.query.api.CellStyleCriterion;
+import builders.dsl.spreadsheet.query.api.RowCriterion;
+import builders.dsl.spreadsheet.query.api.SheetCriterion;
 import builders.dsl.spreadsheet.query.api.SpreadsheetCriteria;
 import builders.dsl.spreadsheet.query.api.SpreadsheetCriteriaResult;
+import builders.dsl.spreadsheet.query.api.WorkbookCriterion;
 import builders.dsl.spreadsheet.query.poi.PoiSpreadsheetCriteria;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,15 +42,18 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
+import java.util.function.Consumer;
 
-@SuppressWarnings("java:S106")
+@SuppressWarnings({"java:S106", "java:S3776"})
 public final class SpreadsheetCli {
 
     private SpreadsheetCli() {
@@ -78,10 +89,10 @@ public final class SpreadsheetCli {
         System.out.println();
         System.out.println("Usage:");
         System.out.println("  create <input.json|yaml|yml> <output.xlsx>");
-        System.out.println("  query <workbook.xlsx> <query.json|yaml|yml>");
+        System.out.println("  query <workbook.xlsx> <criteria.json|yaml|yml>");
         System.out.println();
         System.out.println("The create command accepts the data format supported by spreadsheet-builder-data.");
-        System.out.println("The query command accepts: sheet, where.column, and optional where.equals/where.contains.");
+        System.out.println("The query command accepts a serialized criteria tree: sheets, rows, cells, page, and or.");
     }
 
     private static void requireArgumentCount(String[] args, int count, String usage) {
@@ -103,52 +114,191 @@ public final class SpreadsheetCli {
     }
 
     private static void query(File workbookFile, Path queryFile) throws IOException {
-        Map<String, Object> query = readMap(queryFile);
-        String sheetName = string(query.getOrDefault("sheet", "Sheet1"));
-        Map<String, Object> where = map(query.get("where"));
-        int column = parseColumn(string(where.getOrDefault("column", "A")));
-        Object expected = where.get("equals");
-        String contains = where.containsKey("contains") ? string(where.get("contains")) : null;
-
+        Map<String, Object> serializedCriteria = readMap(queryFile);
         SpreadsheetCriteria criteria = PoiSpreadsheetCriteria.FACTORY.forFile(workbookFile);
-        SpreadsheetCriteriaResult result = criteria.query(workbook -> workbook.sheet(sheetName, sheet -> sheet.row(row -> row.cell(column))));
-        List<Map<String, Object>> matches = new ArrayList<>();
-
-        for (Row row : result.getRows()) {
-            Cell matchedCell = findCell(row.getCells(), column);
-            if (matchedCell == null || !matches(matchedCell.getValue(), expected, contains)) {
-                continue;
-            }
-            Map<String, Object> match = new LinkedHashMap<>();
-            match.put("sheet", row.getSheet().getName());
-            match.put("row", row.getNumber());
-            match.put("matchedColumn", columnToName(column));
-            match.put("matchedValue", matchedCell.getValue());
-            match.put("values", row.getCells().stream().map(Cell::getValue).toList());
-            matches.add(match);
-        }
-
+        SpreadsheetCriteriaResult result = criteria.query(workbook -> applyWorkbook(workbook, serializedCriteria));
         ObjectMapper json = new ObjectMapper();
-        System.out.println(json.writerWithDefaultPrettyPrinter().writeValueAsString(Map.of("matches", matches)));
+        System.out.println(json.writerWithDefaultPrettyPrinter().writeValueAsString(resultMap(result)));
     }
 
-    private static Cell findCell(Collection<? extends Cell> cells, int column) {
-        for (Cell cell : cells) {
-            if (cell.getColumn() == column) {
-                return cell;
+    private static void applyWorkbook(WorkbookCriterion workbook, Map<String, Object> spec) {
+        for (Object sheetValue : list(spec.get("sheets"))) {
+            Map<String, Object> sheet = map(sheetValue);
+            if (sheet.containsKey("name")) {
+                workbook.sheet(string(sheet.get("name")), criterion -> applySheet(criterion, sheet));
+            } else {
+                workbook.sheet(criterion -> applySheet(criterion, sheet));
             }
         }
-        return null;
+        for (Object alternative : list(spec.get("or"))) {
+            workbook.or((Consumer<WorkbookCriterion>) criterion -> applyWorkbook(criterion, map(alternative)));
+        }
+        if (!spec.containsKey("sheets") && spec.containsKey("sheet")) {
+            workbook.sheet(string(spec.get("sheet")), criterion -> applySheet(criterion, spec));
+        }
     }
 
-    private static boolean matches(Object actual, Object expected, String contains) {
-        if (expected != null) {
-            return Objects.equals(String.valueOf(actual), String.valueOf(expected));
+    private static void applySheet(SheetCriterion sheet, Map<String, Object> spec) {
+        if (spec.containsKey("state")) {
+            sheet.state(enumValue(Keywords.SheetState.class, spec.get("state")));
         }
-        if (contains != null) {
-            return String.valueOf(actual).toLowerCase(Locale.ROOT).contains(contains.toLowerCase(Locale.ROOT));
+        if (spec.containsKey("page")) {
+            applyPage(sheet, map(spec.get("page")));
         }
-        return true;
+        for (Object rowValue : list(spec.get("rows"))) {
+            applyRowSelection(sheet, map(rowValue));
+        }
+        for (Object alternative : list(spec.get("or"))) {
+            sheet.or((Consumer<SheetCriterion>) criterion -> applySheet(criterion, map(alternative)));
+        }
+    }
+
+    private static void applyPage(SheetCriterion sheet, Map<String, Object> spec) {
+        sheet.page(page -> {
+            if (spec.containsKey("orientation")) {
+                page.orientation(enumValue(Keywords.Orientation.class, spec.get("orientation")));
+            }
+            if (spec.containsKey("paper")) {
+                page.paper(enumValue(Keywords.Paper.class, spec.get("paper")));
+            }
+        });
+    }
+
+    private static void applyRowSelection(SheetCriterion sheet, Map<String, Object> spec) {
+        if (spec.containsKey("from") && spec.containsKey("to")) {
+            sheet.row(integer(spec.get("from")), integer(spec.get("to")));
+            sheet.row(row -> applyRow(row, spec));
+        } else if (spec.containsKey("number")) {
+            sheet.row(integer(spec.get("number")), row -> applyRow(row, spec));
+        } else if (spec.containsKey("row")) {
+            sheet.row(integer(spec.get("row")), row -> applyRow(row, spec));
+        } else {
+            sheet.row(row -> applyRow(row, spec));
+        }
+    }
+
+    private static void applyRow(RowCriterion row, Map<String, Object> spec) {
+        for (Object cellValue : list(spec.get("cells"))) {
+            applyCellSelection(row, map(cellValue));
+        }
+        for (Object alternative : list(spec.get("or"))) {
+            row.or((Consumer<RowCriterion>) criterion -> applyRow(criterion, map(alternative)));
+        }
+    }
+
+    private static void applyCellSelection(RowCriterion row, Map<String, Object> spec) {
+        if (spec.containsKey("from") && spec.containsKey("to")) {
+            Object from = spec.get("from");
+            Object to = spec.get("to");
+            if (from instanceof Number && to instanceof Number) {
+                row.cell(integer(from), integer(to), cell -> applyCell(cell, spec));
+            } else {
+                row.cell(string(from), string(to), cell -> applyCell(cell, spec));
+            }
+        } else if (spec.containsKey("column")) {
+            Object column = spec.get("column");
+            if (column instanceof Number) {
+                row.cell(integer(column), cell -> applyCell(cell, spec));
+            } else {
+                row.cell(string(column), cell -> applyCell(cell, spec));
+            }
+        } else {
+            row.cell(cell -> applyCell(cell, spec));
+        }
+    }
+
+    private static void applyCell(CellCriterion cell, Map<String, Object> spec) {
+        if (spec.containsKey("value")) {
+            cell.value(spec.get("value"));
+        }
+        if (spec.containsKey("string")) {
+            cell.string(string(spec.get("string")));
+        }
+        if (spec.containsKey("number")) {
+            cell.number(decimal(spec.get("number")));
+        }
+        if (spec.containsKey("bool")) {
+            cell.bool(Boolean.valueOf(string(spec.get("bool"))));
+        }
+        if (spec.containsKey("localDate")) {
+            cell.localDate(LocalDate.parse(string(spec.get("localDate"))));
+        }
+        if (spec.containsKey("localDateTime")) {
+            cell.localDateTime(LocalDateTime.parse(string(spec.get("localDateTime"))));
+        }
+        if (spec.containsKey("localTime")) {
+            cell.localTime(LocalTime.parse(string(spec.get("localTime"))));
+        }
+        if (spec.containsKey("rowspan")) {
+            cell.rowspan(integer(spec.get("rowspan")));
+        }
+        if (spec.containsKey("colspan")) {
+            cell.colspan(integer(spec.get("colspan")));
+        }
+        if (spec.containsKey("name")) {
+            cell.name(string(spec.get("name")));
+        }
+        if (spec.containsKey("comment")) {
+            cell.comment(string(spec.get("comment")));
+        }
+        if (spec.containsKey("style")) {
+            cell.style(style -> applyStyle(style, map(spec.get("style"))));
+        }
+        for (Object alternative : list(spec.get("or"))) {
+            cell.or((Consumer<CellCriterion>) criterion -> applyCell(criterion, map(alternative)));
+        }
+    }
+
+    private static void applyStyle(CellStyleCriterion style, Map<String, Object> spec) {
+        if (spec.containsKey("background")) {
+            style.background(string(spec.get("background")));
+        }
+        if (spec.containsKey("foreground")) {
+            style.foreground(string(spec.get("foreground")));
+        }
+        if (spec.containsKey("fill")) {
+            style.fill(enumValue(ForegroundFill.class, spec.get("fill")));
+        }
+        if (spec.containsKey("indent")) {
+            style.indent(integer(spec.get("indent")));
+        }
+        if (spec.containsKey("rotation")) {
+            style.rotation(integer(spec.get("rotation")));
+        }
+        if (spec.containsKey("format")) {
+            style.format(string(spec.get("format")));
+        }
+    }
+
+    private static Map<String, Object> resultMap(SpreadsheetCriteriaResult result) {
+        Map<String, Object> output = new LinkedHashMap<>();
+        output.put("sheets", result.getSheets().stream().map(SpreadsheetCli::sheetMap).toList());
+        output.put("rows", result.getRows().stream().map(SpreadsheetCli::rowMap).toList());
+        output.put("cells", result.getCells().stream().map(SpreadsheetCli::cellMap).toList());
+        return output;
+    }
+
+    private static Map<String, Object> sheetMap(Sheet sheet) {
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("name", sheet.getName());
+        return map;
+    }
+
+    private static Map<String, Object> rowMap(Row row) {
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("sheet", row.getSheet().getName());
+        map.put("row", row.getNumber());
+        map.put("values", row.getCells().stream().map(Cell::getValue).toList());
+        return map;
+    }
+
+    private static Map<String, Object> cellMap(Cell cell) {
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("sheet", cell.getRow().getSheet().getName());
+        map.put("row", cell.getRow().getNumber());
+        map.put("column", cell.getColumnAsString());
+        map.put("value", cell.getValue());
+        return map;
     }
 
     private static Map<String, Object> readMap(Path input) throws IOException {
@@ -164,39 +314,40 @@ public final class SpreadsheetCli {
         return Map.of();
     }
 
+    private static List<?> list(Object value) {
+        if (value instanceof Collection<?>) {
+            return new ArrayList<>((Collection<?>) value);
+        }
+        if (value == null) {
+            return List.of();
+        }
+        return List.of(value);
+    }
+
     private static String string(Object value) {
         return value == null ? "" : String.valueOf(value);
     }
 
+    private static Integer integer(Object value) {
+        if (value instanceof Number) {
+            return ((Number) value).intValue();
+        }
+        return Integer.valueOf(string(value));
+    }
+
+    private static Double decimal(Object value) {
+        if (value instanceof Number) {
+            return ((Number) value).doubleValue();
+        }
+        return Double.valueOf(string(value));
+    }
+
+    private static <T extends Enum<T>> T enumValue(Class<T> type, Object value) {
+        String name = string(value).trim().replace('-', '_').toUpperCase(Locale.ROOT);
+        return Enum.valueOf(type, name);
+    }
+
     private static boolean isJson(Path path) {
         return path.getFileName().toString().toLowerCase(Locale.ROOT).endsWith(".json");
-    }
-
-    private static int parseColumn(String text) {
-        String column = text.trim().toUpperCase(Locale.ROOT);
-        if (column.matches("\\d+")) {
-            return Integer.parseInt(column);
-        }
-
-        int result = 0;
-        for (int i = 0; i < column.length(); i++) {
-            char character = column.charAt(i);
-            if (character < 'A' || character > 'Z') {
-                throw new IllegalArgumentException("Invalid column: " + text);
-            }
-            result = result * 26 + character - 'A' + 1;
-        }
-        return result;
-    }
-
-    private static String columnToName(int column) {
-        StringBuilder name = new StringBuilder();
-        int current = column;
-        while (current > 0) {
-            current--;
-            name.insert(0, (char) ('A' + current % 26));
-            current /= 26;
-        }
-        return name.toString();
     }
 }
