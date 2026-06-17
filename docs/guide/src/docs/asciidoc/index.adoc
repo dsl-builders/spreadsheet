@@ -3959,6 +3959,22 @@ Query an Excel workbook with serialized JSON/YAML criteria:
 spreadsheet-builder-cli query people.xlsx query.yml
 ----
 
+You can also run the CLI directly from Maven coordinates with jbx:
+
+[source,bash,subs='attributes']
+----
+jbx builders.dsl:spreadsheet-builder-cli:{project-version} create people.yml people.xlsx
+jbx builders.dsl:spreadsheet-builder-cli:{project-version} query people.xlsx query.yml
+----
+
+Or with JBang by passing the CLI main class explicitly:
+
+[source,bash,subs='attributes']
+----
+jbang --main builders.dsl.spreadsheet.cli.SpreadsheetCli builders.dsl:spreadsheet-builder-cli:{project-version} create people.yml people.xlsx
+jbang --main builders.dsl.spreadsheet.cli.SpreadsheetCli builders.dsl:spreadsheet-builder-cli:{project-version} query people.xlsx query.yml
+----
+
 The query file mirrors the criteria DSL tree, so it can express workbook,
 sheet, row, cell, page, and style criteria instead of a one-off filter shape.
 
