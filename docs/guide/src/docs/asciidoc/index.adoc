@@ -3959,12 +3959,12 @@ Query an Excel workbook with serialized JSON/YAML criteria:
 spreadsheet-builder-cli query people.xlsx query.yml
 ----
 
-You can also run the CLI directly from Maven coordinates with jbx:
+You can also run the CLI directly from Maven coordinates with jbx by passing the CLI main class explicitly:
 
 [source,bash,subs='attributes']
 ----
-jbx builders.dsl:spreadsheet-builder-cli:{project-version} create people.yml people.xlsx
-jbx builders.dsl:spreadsheet-builder-cli:{project-version} query people.xlsx query.yml
+jbx --main builders.dsl.spreadsheet.cli.SpreadsheetCli builders.dsl:spreadsheet-builder-cli:{project-version} create people.yml people.xlsx
+jbx --main builders.dsl.spreadsheet.cli.SpreadsheetCli builders.dsl:spreadsheet-builder-cli:{project-version} query people.xlsx query.yml
 ----
 
 Or with JBang, which can use the CLI JAR's `Main-Class` manifest entry:
