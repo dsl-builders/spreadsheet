@@ -1,0 +1,191 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spreadsheet.dsl.builders/schema/query.schema.json",
+  "title": "Spreadsheet Builder CLI Query Criteria",
+  "description": "Serialized criteria tree accepted by `spreadsheet-builder-cli query`. The same shape can be written as JSON or YAML.",
+  "$ref": "#/$defs/workbookCriterion",
+  "$defs": {
+    "oneOrManySheets": {
+      "oneOf": [
+        { "$ref": "#/$defs/sheetCriterion" },
+        {
+          "type": "array",
+          "items": { "$ref": "#/$defs/sheetCriterion" }
+        }
+      ]
+    },
+    "oneOrManyRows": {
+      "oneOf": [
+        { "$ref": "#/$defs/rowCriterion" },
+        {
+          "type": "array",
+          "items": { "$ref": "#/$defs/rowCriterion" }
+        }
+      ]
+    },
+    "oneOrManyCells": {
+      "oneOf": [
+        { "$ref": "#/$defs/cellCriterion" },
+        {
+          "type": "array",
+          "items": { "$ref": "#/$defs/cellCriterion" }
+        }
+      ]
+    },
+    "oneOrManyWorkbookAlternatives": {
+      "oneOf": [
+        { "$ref": "#/$defs/workbookCriterion" },
+        {
+          "type": "array",
+          "items": { "$ref": "#/$defs/workbookCriterion" }
+        }
+      ]
+    },
+    "oneOrManySheetAlternatives": {
+      "oneOf": [
+        { "$ref": "#/$defs/sheetCriterion" },
+        {
+          "type": "array",
+          "items": { "$ref": "#/$defs/sheetCriterion" }
+        }
+      ]
+    },
+    "oneOrManyRowAlternatives": {
+      "oneOf": [
+        { "$ref": "#/$defs/rowCriterion" },
+        {
+          "type": "array",
+          "items": { "$ref": "#/$defs/rowCriterion" }
+        }
+      ]
+    },
+    "oneOrManyCellAlternatives": {
+      "oneOf": [
+        { "$ref": "#/$defs/cellCriterion" },
+        {
+          "type": "array",
+          "items": { "$ref": "#/$defs/cellCriterion" }
+        }
+      ]
+    },
+    "cellAddress": {
+      "description": "Excel column name such as A/C/AA, or a one-based numeric column index.",
+      "oneOf": [
+        { "type": "integer", "minimum": 1 },
+        { "type": "string", "pattern": "^[A-Za-z]+$" }
+      ]
+    },
+    "workbookCriterion": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "sheets": { "$ref": "#/$defs/oneOrManySheets" },
+        "sheet": {
+          "type": "string",
+          "description": "Shortcut for selecting a sheet by name when sheet criteria live at the root."
+        },
+        "or": { "$ref": "#/$defs/oneOrManyWorkbookAlternatives" }
+      },
+      "anyOf": [
+        { "required": ["sheets"] },
+        { "required": ["sheet"] },
+        { "required": ["or"] }
+      ]
+    },
+    "sheetCriterion": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "state": {
+          "type": "string",
+          "description": "Sheet state. Case-insensitive in the CLI; hyphens are treated as underscores.",
+          "examples": ["visible", "hidden", "very-hidden", "locked"]
+        },
+        "page": { "$ref": "#/$defs/pageCriterion" },
+        "rows": { "$ref": "#/$defs/oneOrManyRows" },
+        "or": { "$ref": "#/$defs/oneOrManySheetAlternatives" }
+      }
+    },
+    "pageCriterion": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "orientation": {
+          "type": "string",
+          "description": "Page orientation. Case-insensitive in the CLI.",
+          "examples": ["landscape", "portrait"]
+        },
+        "paper": {
+          "type": "string",
+          "description": "Paper name. Case-insensitive in the CLI; hyphens are treated as underscores.",
+          "examples": ["A4", "letter", "legal", "standard-11-17"]
+        }
+      }
+    },
+    "rowCriterion": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "from": { "type": "integer", "minimum": 1 },
+        "to": { "type": "integer", "minimum": 1 },
+        "number": { "type": "integer", "minimum": 1 },
+        "row": { "type": "integer", "minimum": 1 },
+        "cells": { "$ref": "#/$defs/oneOrManyCells" },
+        "or": { "$ref": "#/$defs/oneOrManyRowAlternatives" }
+      }
+    },
+    "cellCriterion": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "from": { "$ref": "#/$defs/cellAddress" },
+        "to": { "$ref": "#/$defs/cellAddress" },
+        "column": { "$ref": "#/$defs/cellAddress" },
+        "value": {
+          "description": "Exact cell value to match.",
+          "type": ["string", "number", "integer", "boolean", "null"]
+        },
+        "string": { "type": "string" },
+        "number": { "type": "number" },
+        "bool": {
+          "oneOf": [
+            { "type": "boolean" },
+            { "type": "string", "enum": ["true", "false"] }
+          ]
+        },
+        "localDate": { "type": "string", "format": "date" },
+        "localDateTime": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\\.[0-9]+)?)?$"
+        },
+        "localTime": {
+          "type": "string",
+          "pattern": "^[0-9]{2}:[0-9]{2}(:[0-9]{2}(\\.[0-9]+)?)?$"
+        },
+        "rowspan": { "type": "integer", "minimum": 1 },
+        "colspan": { "type": "integer", "minimum": 1 },
+        "name": { "type": "string" },
+        "comment": { "type": "string" },
+        "style": { "$ref": "#/$defs/styleCriterion" },
+        "or": { "$ref": "#/$defs/oneOrManyCellAlternatives" }
+      }
+    },
+    "styleCriterion": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "background": { "type": "string" },
+        "foreground": { "type": "string" },
+        "fill": {
+          "type": "string",
+          "description": "Foreground fill. Case-insensitive in the CLI; hyphens are treated as underscores.",
+          "examples": ["solid-foreground", "fine-dots", "no-fill"]
+        },
+        "indent": { "type": "integer", "minimum": 0 },
+        "rotation": { "type": "integer" },
+        "format": { "type": "string" }
+      }
+    }
+  }
+}
