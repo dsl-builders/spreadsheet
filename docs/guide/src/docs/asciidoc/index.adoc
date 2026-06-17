@@ -3967,12 +3967,12 @@ jbx builders.dsl:spreadsheet-builder-cli:{project-version} create people.yml peo
 jbx builders.dsl:spreadsheet-builder-cli:{project-version} query people.xlsx query.yml
 ----
 
-Or with JBang by passing the CLI main class explicitly:
+Or with JBang, which can use the CLI JAR's `Main-Class` manifest entry:
 
 [source,bash,subs='attributes']
 ----
-jbang --main builders.dsl.spreadsheet.cli.SpreadsheetCli builders.dsl:spreadsheet-builder-cli:{project-version} create people.yml people.xlsx
-jbang --main builders.dsl.spreadsheet.cli.SpreadsheetCli builders.dsl:spreadsheet-builder-cli:{project-version} query people.xlsx query.yml
+jbang builders.dsl:spreadsheet-builder-cli:{project-version} create people.yml people.xlsx
+jbang builders.dsl:spreadsheet-builder-cli:{project-version} query people.xlsx query.yml
 ----
 
 The query file mirrors the criteria DSL tree, so it can express workbook,
