@@ -52,73 +52,6 @@ dependencies {
 ----
 
 
-== Command Line
-
-The `spreadsheet-builder-cli` module provides a small command line wrapper around
-`spreadsheet-builder-data` and `spreadsheet-builder-poi`.
-
-Create an Excel workbook from JSON/YAML data:
-
-[source,bash]
-----
-spreadsheet-builder-cli create people.yml people.xlsx
-----
-
-Query an Excel workbook with serialized JSON/YAML criteria:
-
-[source,bash]
-----
-spreadsheet-builder-cli query people.xlsx query.yml
-----
-
-The query file mirrors the criteria DSL tree, so it can express workbook,
-sheet, row, cell, page, and style criteria instead of a one-off filter shape.
-
-YAML criteria:
-
-[source,yaml]
-----
-sheets:
-- name: People
-  rows:
-  - from: 2
-    to: 10
-    cells:
-    - column: C
-      value: Prague
-----
-
-The same query as JSON criteria:
-
-[source,json]
-----
-{
-  "sheets": [
-    {
-      "name": "People",
-      "rows": [
-        {
-          "from": 2,
-          "to": 10,
-          "cells": [
-            {
-              "column": "C",
-              "value": "Prague"
-            }
-          ]
-        }
-      ]
-    }
-  ]
-}
-----
-
-The query command returns matching `sheets`, `rows`, and `cells` as JSON.
-
-The query JSON Schema is published with this guide at
-link:schema/query.schema.json[`schema/query.schema.json`] and can be used for
-both JSON and YAML query files.
-
 
 == Writing Spreadsheets
 
@@ -4007,7 +3940,93 @@ _Result:_ Every cell from the spreadsheet which has red foreground and white fon
 The color you usually see in the cell is `foreground` not a `background` as you may think!
 ====
 
+== Command Line
+
+The `spreadsheet-builder-cli` module provides a small command line wrapper around
+`spreadsheet-builder-data` and `spreadsheet-builder-poi`.
+
+Create an Excel workbook from JSON/YAML data:
+
+[source,bash]
+----
+spreadsheet-builder-cli create people.yml people.xlsx
+----
+
+Query an Excel workbook with serialized JSON/YAML criteria:
+
+[source,bash]
+----
+spreadsheet-builder-cli query people.xlsx query.yml
+----
+
+The query file mirrors the criteria DSL tree, so it can express workbook,
+sheet, row, cell, page, and style criteria instead of a one-off filter shape.
+
+YAML criteria:
+
+[source,yaml]
+----
+sheets:
+- name: People
+  rows:
+  - from: 2
+    to: 10
+    cells:
+    - column: C
+      value: Prague
+----
+
+The same query as JSON criteria:
+
+[source,json]
+----
+{
+  "sheets": [
+    {
+      "name": "People",
+      "rows": [
+        {
+          "from": 2,
+          "to": 10,
+          "cells": [
+            {
+              "column": "C",
+              "value": "Prague"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+----
+
+The query command returns matching `sheets`, `rows`, and `cells` as JSON.
+
+The query JSON Schema is published with this guide at
+link:schema/query.schema.json[`schema/query.schema.json`] and can be used for
+both JSON and YAML query files.
+
+
+
 == Changelog
+
+=== 4.0.2
+Added the `spreadsheet-builder-cli` module for creating workbooks from JSON/YAML data and querying Excel workbooks from serialized JSON/YAML criteria.
+
+Published the query JSON Schema in the guide at link:schema/query.schema.json[`schema/query.schema.json`].
+
+=== 4.0.1
+Fixed Maven Central release artifact signing and kept the release workflow tag-only.
+
+Removed retired Sheet.REST references from the documentation.
+
+=== 4.0.0
+Refreshed publishing and runtime dependencies, including Apache POI and Groovy-related dependencies.
+
+Fixed Groovy DSL delegate keyword resolution and preserved static annotations in published metadata.
+
+Refreshed Google credentials handling for CI and release workflows.
 
 === 3.0.0
 Upgraded to the latest Apache POI 5.x
