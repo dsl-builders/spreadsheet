@@ -68,6 +68,10 @@ The same query as JSON criteria:
 }
 ----
 
+A JSON Schema for query files is packaged with the CLI at
+link:libs/spreadsheet-builder-cli/src/main/resources/builders/dsl/spreadsheet/cli/query.schema.json[`query.schema.json`].
+It describes the same structure for both JSON and YAML query files.
+
 The query command returns matching `sheets`, `rows`, and `cells` as JSON.
 
 == Acknowledgement

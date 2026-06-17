@@ -114,6 +114,21 @@ sheets:
         result.rows[0].values == ['Alice', 30.0, 'Prague']
     }
 
+    void 'query JSON schema is packaged as a CLI resource'() {
+        expect:
+        SpreadsheetCli.classLoader.getResource('builders/dsl/spreadsheet/cli/query.schema.json')
+
+        when:
+        Map schema = new ObjectMapper().readValue(
+            SpreadsheetCli.classLoader.getResource('builders/dsl/spreadsheet/cli/query.schema.json'),
+            Map
+        )
+
+        then:
+        schema.'$schema' == 'https://json-schema.org/draft/2020-12/schema'
+        schema.title == 'Spreadsheet Builder CLI Query Criteria'
+    }
+
     void 'queries an Excel workbook using serialized JSON criteria'() {
         given:
         File workbook = workbook()
